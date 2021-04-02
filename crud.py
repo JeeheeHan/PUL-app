@@ -22,5 +22,14 @@ def login_check(email, password):
             return user.user_id
     except:
         pass
+    
+def get_user_by_email(email):
+    """Return a user by email"""
+    
+    return User.query.filter(User.email == email).first()
+    #Return the first result of this Query or None if the result doesn’t contain any row.
 
 
+if __name__ == '__main__':
+    from server import app
+    connect_to_db(app)

@@ -1,11 +1,12 @@
 """Models for PUL application"""
-
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import datetime
+from datetime import datetime
+
 
 db = SQLAlchemy()
 
-def connect_to_bd(flask_app, db_uri = 'postgresql:///pul_db', echo=True):
+def connect_to_db(flask_app, db_uri = 'postgresql:///pul_db', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -26,7 +27,7 @@ class User(db.Model):
     email = db.Column(db.String, 
                         unique=True)
     password = db.Column(db.String, nullable= False)
-    created_at = db.Column(db.Datetime, default = datetime.datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False,default=datetime.utcnow)
 
     def __repr__(self):
         return f'<User user_id:{self.username}>'
@@ -44,7 +45,7 @@ class Plants_type(db.Model):
     __tablename__= 'plants_type'
 
     plant_typeID = db.Column(db.Integer,
-                            autoincrement.True,
+                            autoincrement=True,
                             primary_key=True)
     plant_type = db.Column(db.String, unique=True, nullable=False)
     plant_name = db.Column(db.String)
@@ -67,12 +68,12 @@ class Health(db.Model):
 
 
 
-class General_chat(bd.Model):
+class General_chat(db.Model):
     """General chat table"""
     __tablename__ = 'chat'
 
     chatID = db.Column(db.Integer,primary_key=True)
-    timestamp = db.Column(db.Datetime, default = datetime.datetime.utcnow)
+    timestamp = db.Column(db.DateTime, nullable=False,default=datetime.utcnow)
     #review this later in case of message time stamp thing 
     userID = db.Column(db.Integer, nullable= False)
     message = db.Column(db.String, nullable= False)

@@ -7,6 +7,8 @@ from flask_socketio import SocketIO, send, emit
 import eventlet
 import gevent
 
+import crud
+
 app = Flask(__name__)
 app.secret_key = "test"
 
@@ -18,7 +20,7 @@ socketIO = SocketIO(app, cors_allowed_origins="*")
 @app.route('/')
 def homepage():
     """Homepage route"""
-    return render_template('testsocket.html')
+    return render_template('homepage.html')
 
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
