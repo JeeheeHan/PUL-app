@@ -1,16 +1,16 @@
 """Server for PUL web app"""
 
-from flask import Flask, render_template, request, flash, session, redirect
+from flask import Flask, render_template, request, flash, redirect, jsonify
 from jinja2 import StrictUndefined
 from flask_socketio import SocketIO, send, emit
 
-import eventlet
-import gevent
+from model import *
 
 import crud
 
 app = Flask(__name__)
 app.secret_key = "test"
+app.jinja_env.undefined = StrictUndefined
 
 #create the server using socket 
 socketIO = SocketIO(app, cors_allowed_origins="*")
@@ -22,13 +22,35 @@ def homepage():
     """Homepage route"""
     return render_template('homepage.html')
 
-def messageReceived(methods=['GET', 'POST']):
-    print('message was received!!!')
+@socketIO.on('connect')
+def connected():
+    print('Connected!')
 
-@socketIO.on('my event')
-def handle_my_custom_event(json, methods=['GET', 'POST']):
-    print('received my event: '+ str(json))
-    send('my response', json, callback=messageReceived)
+@socketIO.on('disconnect')
+def diconnected():
+    print('Disconnected')
+
+@socketIO.on('message')
+def handle_message(message):
+    print('recived message: ' + message)
+    send(message, broadcast=True)
+
+
+# @socketIO.on('UserAdded')
+# def userAdded(message):
+#     print('User Added')
+#     emit('userAddedResponse'), {'data':message}, broadcast=True)
+
+
+
+# def messageReceived(methods=['GET', 'POST']):
+#     print('message was received!!!')
+
+# @socketIO.on('my event')
+# def handle_my_custom_event(json, methods=['GET', 'POST']):
+#     print('received my event: '+ str(json))
+# #     send('my response', json, callback=messageReceived)
+
 
 @app.route('/users', methods=['POST'])
 def register_user():
@@ -57,16 +79,16 @@ def login():
     user_id = crud.login_check(email, password)
 
     if user_id: 
-        flash('Logged in!')
+        flash("Successfully logged in")
     else:
         flash('Wrong credentials. Try again')
 
-    return redirect ('/')
-
+    return render_template ('base.html')
 
 
 #let's run this thing! 
 
 if __name__ == '__main__':
-    app.run(port=5000, host='0.0.0.0')
-    socketIO.run(app, debug=False, logger=True, engineio_logger=True)
+    connect_to_db(app)
+    app.run(port=5000, host='0.0.0.0', debug=True)
+    # socketIO.run(app, debug=False, logger=True, engineio_logger=True)
