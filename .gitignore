@@ -5,7 +5,7 @@ templates/testsocket.html
 secrets.py
 secrets.sh*
 *secret.*
-static/
+*.jsx
 node_modules
 package-lock.json
 chat.jsx

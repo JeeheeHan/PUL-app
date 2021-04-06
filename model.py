@@ -57,18 +57,6 @@ class Adjectives(db.Model):
     #keeping the type to be an integer for now so maybe i can call it earlier 
     word = db.Column(db.String)
 
-
-# class Health(db.Model):
-#     """Health stages for plant"""
-
-#     __tablename__= 'health'
-
-#     health_status = db.Column(db.Integer)
-#     #this would most likely be changed based on the counts of compliments or insults
-#     #might only need to save this if with certain times of the day 
-#     # plant = db.relationship('Plants_type', backref='health')
-
-
 class General_chat(db.Model):
     """General chat table"""
     __tablename__ = 'chat'

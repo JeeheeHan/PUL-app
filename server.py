@@ -2,7 +2,7 @@
 
 from flask import Flask, render_template, request, flash, redirect, jsonify
 from jinja2 import StrictUndefined
-from flask_socketio import SocketIO, send, emit
+from flask_socketio import SocketIO, emit
 
 from model import *
 
@@ -12,44 +12,34 @@ app = Flask(__name__)
 app.secret_key = "test"
 app.jinja_env.undefined = StrictUndefined
 
-#create the server using socket 
-socketIO = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app)
 
-# app.host='localhost'
+#create the server using socket 
+# socketIO = SocketIO(app, cors_allowed_origins="*")
+
 
 @app.route('/')
 def homepage():
     """Homepage route"""
-    return render_template('homepage.html')
+    return render_template('testsocket.html')
 
-@socketIO.on('connect')
+@socketio.on('connect')
 def connected():
     print('Connected!')
 
-@socketIO.on('disconnect')
+@socketio.on('disconnect')
 def diconnected():
     print('Disconnected')
 
-@socketIO.on('message')
-def handle_message(message):
-    print('recived message: ' + message)
-    send(message, broadcast=True)
+@socketio.on('message')
+def handle_message(data):
+    print('received message: ' + data)
 
+@socketio.on('my event')
+def handle_my_custom_event(data):
+    print('my response', data)
+    emit('my response', data, broadcast=True)
 
-# @socketIO.on('UserAdded')
-# def userAdded(message):
-#     print('User Added')
-#     emit('userAddedResponse'), {'data':message}, broadcast=True)
-
-
-
-# def messageReceived(methods=['GET', 'POST']):
-#     print('message was received!!!')
-
-# @socketIO.on('my event')
-# def handle_my_custom_event(json, methods=['GET', 'POST']):
-#     print('received my event: '+ str(json))
-# #     send('my response', json, callback=messageReceived)
 
 
 @app.route('/users', methods=['POST'])
@@ -60,7 +50,7 @@ def register_user():
     password = request.form.get('password')
 
     user = crud.get_user_by_email(email)
-
+#revisit the flash message since this won't render to the socket-io
     if user:
         flash("Account with this email exists")
     else:
@@ -90,5 +80,5 @@ def login():
 
 if __name__ == '__main__':
     connect_to_db(app)
-    app.run(port=5000, host='0.0.0.0', debug=True)
-    # socketIO.run(app, debug=False, logger=True, engineio_logger=True)
+    # app.run(port=5000, host='0.0.0.0', debug=True)
+    socketio.run(app, host='0.0.0.0', debug=True)
