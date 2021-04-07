@@ -2,34 +2,31 @@
 
 from model import *
 
-def create_user(eml, pwd):
+def create_user(user, pwd):
     """Create and return a new user."""
 
-    user = User(email=eml, password=pwd)
+    user = User(username=user, password=pwd)
 
     db.session.add(user)
     db.session.commit()
 
     return user
 
-def login_check(email, password):
+def login_check(username, password):
     """Check if email matches password"""
+
+    username = form.username.data
+    #https://wtforms.readthedocs.io/en/2.3.x/fields/
+    password = field.data
+
     try: 
-        user = User.query.filter(User.email == email).first()
-        password_by_email = user.password
+        user = User.query.filter_by(username=username).first()
+        password_by_username = user.password
 
-        if password == password_by_email:
-            return user.user_id
+        if password == password_by_username:
+            return login_user(user)
     except:
-        pass
-    
-def get_user_by_email(email):
-    """Return a user by email"""
-    
-    return User.query.filter(User.email == email).first()
-    #Return the first result of this Query or None if the result doesn’t contain any row.
-
-
+        raise ValidationError("Wrong credentials, please try again")
 
 
 

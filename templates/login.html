@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  <!-- <link rel="stylesheet" href="/style/style.css"> -->
+  <script crossorigin src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <!-- <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script> -->
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+
+{% endblock head %}
+
+{% block body %}
+
+  <div id="loginbox"></div>
+  <h2>Login here</h2>
+  <p>Enter you username/password to start chatting</p>
+
+  <form method="POST" action="/login">
+    <div>{{ form.username.label }}: {{ form.username(class="css_class") }}</div>
+    {% if form.username.errors %}
+        <ul class="errors">{% for error in form.username.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+    {% endif %}
+
+    <div>{{ form.password.label }}: {{ form.password() }}</div>
+    {% if form.password.errors %}
+        <ul class="errors">{% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+    {% endif %}
+      <input type="submit">
+  </div>
+</form>
+  
+  </form>
+
+  <div>
+    <p>
+        Don't an account already? <a href="/register"> Here</a>
+    </p>
+</div>
+
+
+  <!-- <script src="/static/homepage.js" type="text/js"></script> -->
+
+{% endblock %}

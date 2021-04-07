@@ -3,24 +3,41 @@
 from flask import Flask, render_template, request, flash, redirect, jsonify
 from jinja2 import StrictUndefined
 from flask_socketio import SocketIO, emit
+from flask_login import LoginManager
+from flask_session import Session
 
 from model import *
+from login import *
 
 import crud
 
 app = Flask(__name__)
 app.secret_key = "test"
+app.config['SESSION_TYPE'] = 'filesystem'
+
 app.jinja_env.undefined = StrictUndefined
 
-socketio = SocketIO(app)
+#Declaring loginmanager into a var and using it as a decorator to check if user is logged in
+login_manager = LoginManager()
+#Since socket io will branch off after copying the sessions, we need to turn off manage session for flask session works
+Session(app)
+#create the server with the var socketio
+socketio = SocketIO(app, manage_session=False)
 
-#create the server using socket 
-# socketIO = SocketIO(app, cors_allowed_origins="*")
 
+
+#Checking to see if user is already logged
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 @app.route('/')
 def homepage():
-    """Homepage route"""
+    return render_template("homepage.html")
+
+#Flask-SocketIO also dispatches connection and disconnection events
+@app.route('/chat')
+def testsocket():
     return render_template('testsocket.html')
 
 @socketio.on('connect')
@@ -31,49 +48,43 @@ def connected():
 def diconnected():
     print('Disconnected')
 
-@socketio.on('message')
-def handle_message(data):
-    print('received message: ' + data)
-
 @socketio.on('my event')
 def handle_my_custom_event(data):
     print('my response', data)
     emit('my response', data, broadcast=True)
 
-
-
-@app.route('/users', methods=['POST'])
-def register_user():
-    """Create a new user."""
-
-    email = request.form.get('email')
-    password = request.form.get('password')
-
-    user = crud.get_user_by_email(email)
-#revisit the flash message since this won't render to the socket-io
-    if user:
-        flash("Account with this email exists")
-    else:
-        crud.create_user(email,password)
-        flash("Account created! Please log in")
-
-    return redirect('/')
-
-@app.route('/login', methods= ['POST'])
+@app.route('/login', methods= ['POST', 'GET'])
 def login():
     """login with credentials"""
+    form = RegisterForm(request.form)
 
-    email = request.form.get('email')
-    password = request.form.get('password')
+    #WTF built in function will check for my convenience
+    #https://flask-wtf.readthedocs.io/en/stable/quickstart.html     
+    if form.validate_on_submit():
+        user_ = User.query.filter_by(username=form.username.data).first()
+        #usermixin in function:
+        login_user(user_)
+        return redirect('testsocket.html')
 
-    user_id = crud.login_check(email, password)
+    return render_template("login.html", form=form)
 
-    if user_id: 
-        flash("Successfully logged in")
-    else:
-        flash('Wrong credentials. Try again')
+@app.route('/register', methods=['POST', 'GET'])
+def register_user():
+    """Create a new user."""
+    form = RegisterForm(request.form)
 
-    return render_template ('base.html')
+    if form.validate_on_submit():
+        username =form.username.data
+        print(username)
+        password= form.password.data
+        print(password)
+    
+        new_user = crud.create_user(username, password)
+
+        flash('Welcome New User! Please log in')
+        return redirect('/login')
+
+    return render_template("register.html", form=form)
 
 
 #let's run this thing! 

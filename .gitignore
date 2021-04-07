@@ -9,3 +9,4 @@ secrets.sh*
 node_modules
 package-lock.json
 chat.jsx
+flask_session

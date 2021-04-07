@@ -2,7 +2,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
+from flask_login import UserMixin
 
 db = SQLAlchemy()
 
@@ -16,19 +16,23 @@ def connect_to_db(flask_app, db_uri = 'postgresql:///pul_db', echo=True):
 
     print('Connect to DB!')
 
-class User(db.Model):
+class User(UserMixin, db.Model):
+    #to be able to call the 4 methods from flask Login mod
     """ A user table class"""
     __tablename__ ='users'
 
     user_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    username = db.Column(db.String(24))
-    email = db.Column(db.String, 
-                        unique=True)
+    username = db.Column(db.String(24), unique=True)
+    # email = db.Column(db.String, unique=True)
     password = db.Column(db.String, nullable= False)
     created_at = db.Column(db.DateTime, nullable=False,default=datetime.utcnow)
 
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+        
     def __repr__(self):
         return f'<User user_id:{self.user_id}>'
 
