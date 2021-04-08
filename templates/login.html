@@ -15,6 +15,7 @@
   <p>Enter you username/password to start chatting</p>
 
   <form method="POST" action="/login">
+    {{ form.csrf_token }}
     <div>{{ form.username.label }}: {{ form.username(class="css_class") }}</div>
     {% if form.username.errors %}
         <ul class="errors">{% for error in form.username.errors %}<li>{{ error }}</li>{% endfor %}</ul>
@@ -24,7 +25,8 @@
     {% if form.password.errors %}
         <ul class="errors">{% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
     {% endif %}
-      <input type="submit">
+    <p>{{ form.submit(class="button is-sucess")}}</p>
+  </p>
   </div>
 </form>
   

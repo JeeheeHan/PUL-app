@@ -8,19 +8,19 @@
 {% endblock head %}
 
 {% block body %}
-
-{% macro render_field(field) %}
-  <dt>{{ field.label }}
-  <dd>{{ field(**kwargs)|safe }}
-  {% if field.errors %}
-    <ul class=errors>
-    {% for error in field.errors %}
-      <li>{{ error }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-  </dd>
+<!-- //Jinja macro to rendering errors for the form field -->
+{% macro with_errors(field) %}
+<div class="form_field">
+{% if field.errors %}
+    {% set css_class = 'has_error ' + kwargs.pop('class', '') %}
+    {{ field(class=css_class, **kwargs) }}
+    <ul class="errors">{% for error in field.errors %}<li>{{ error|e }}</li>{% endfor %}</ul>
+{% else %}
+    {{ field(**kwargs) }}
+{% endif %}
+</div>
 {% endmacro %}
+
 
 
 
@@ -30,11 +30,14 @@
 
   <form action= "/register" method="POST">
     <dl>
-      {{ render_field(form.username) }}
-      {{ render_field(form.password) }}
-      {{ render_field(form.confirm_pswd) }}
+      {{ form.csrf_token }}
+      {{ with_errors(form.username) }}
+      {{ with_errors(form.password) }}
+      {{ with_errors(form.confirm_pswd) }}
     </dl>
-    <p><input type="submit" value="Register">
+    <p>
+      {{ form.submit(class="button is-sucess")}}</p>
+      <!-- <p><button type="submit">Submit</button></p> -->
   </form>
 
   <div>

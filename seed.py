@@ -13,5 +13,5 @@ os.system('createdb pul_db')
 connect_to_db(server.app)
 db.create_all()
 
-user1 = crud.create_user("test@test.com", "pass")
-
+user1 = crud.create_user("test", "pass")
+user2 = crud.create_user("TEST", "TEST")

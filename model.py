@@ -2,6 +2,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+#using Universal Time Log
 from flask_login import UserMixin
 
 db = SQLAlchemy()
@@ -28,6 +29,7 @@ class User(UserMixin, db.Model):
     # email = db.Column(db.String, unique=True)
     password = db.Column(db.String, nullable= False)
     created_at = db.Column(db.DateTime, nullable=False,default=datetime.utcnow)
+    last_login = db.Column(db.DateTime, nullable=False,default=datetime.utcnow)
 
     def __init__(self, username, password):
         self.username = username

@@ -15,20 +15,28 @@ def create_user(user, pwd):
 def login_check(username, password):
     """Check if email matches password"""
 
-    username = form.username.data
     #https://wtforms.readthedocs.io/en/2.3.x/fields/
-    password = field.data
-
     try: 
         user = User.query.filter_by(username=username).first()
         password_by_username = user.password
 
         if password == password_by_username:
-            return login_user(user)
+            return user.user_id
     except:
-        raise ValidationError("Wrong credentials, please try again")
+        pass
+        # raise ValidationError("Wrong credentials, please try again")
 
+def save_chat_message(data):
+    """Saving chat message into DB"""
 
+    pass
+
+def login_track(username):
+    """Saving last logged into DB"""
+    user = User.query.filter_by(username=username).first()
+    user.last_login = datetime.utcnow()
+    return user.last_login
+    
 
 
 if __name__ == '__main__':
