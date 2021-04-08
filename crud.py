@@ -21,20 +21,26 @@ def login_check(username, password):
         password_by_username = user.password
 
         if password == password_by_username:
-            return user.user_id
+            return user.username
     except:
         pass
         # raise ValidationError("Wrong credentials, please try again")
 
 def save_chat_message(data):
     """Saving chat message into DB"""
+    username = data['username']
+    user_id = User.query.filter_by(username=username).first().user_id
+    message = data['message']
+    timestamp = data['timestamp']
 
-    pass
+    db.session.add(General_chat(message=message, userID=user_id, timestamp=timestamp))
+    db.session.commit()
+    
 
 def login_track(username):
     """Saving last logged into DB"""
     user = User.query.filter_by(username=username).first()
-    user.last_login = datetime.utcnow()
+    user.last_login = datetime.utcnow
     return user.last_login
     
 

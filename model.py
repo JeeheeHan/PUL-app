@@ -68,7 +68,7 @@ class General_chat(db.Model):
     __tablename__ = 'chat'
 
     chatID = db.Column(db.Integer,primary_key=True)
-    timestamp = db.Column(db.DateTime, nullable=False,default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     #review this later in case of message time stamp thing 
     userID = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     message = db.Column(db.String, nullable= False)

@@ -1,6 +1,6 @@
 """Server for PUL web app"""
 
-from flask import Flask, render_template, request, flash, redirect, jsonify, request
+from flask import Flask, render_template, request, redirect, jsonify, request
 from jinja2 import StrictUndefined
 from flask_socketio import SocketIO, emit
 from flask_login import LoginManager
@@ -48,26 +48,15 @@ def connected():
 def diconnected():
     print('Disconnected')
 
-# @socketio.on('my event')
-# def handle_my_custom_event(data):
-#     print('my response', data)
-#     print(data['user_name'])
-#     emit('my response', data, broadcast=True)
- 
-@socketio.on('login timestamp')
-def log_time(data):
-    #from the first connect, I want this to print with the username information 
-    print(f"New Connection! {data['user_name']} has joined")
-    time_stamps = crud.login_track(data['user_name'])
-    emit('my response', data, broadcast=True)
-#data is a dictionary     s
-
 @socketio.on('messaging')
 def handle_message(data):
     #Data wil be {username = username, message = userMessage,timestamp = timestamp}
     """Handle the messages coming in"""
-    # save_message = crud.save_chat_message(fdsfdsfdsfdsafdas)
-    emit('my response',data, broadcast=True)
+    print('new line', data)
+    #Save the incoming messages into General_chat table
+    if data['username']:
+        crud.save_chat_message(data)
+    emit('new line',data, broadcast=True)
 
 
 
@@ -84,9 +73,10 @@ def login():
 
         password = form.password.data
 
-        user_id = crud.login_check(username, password)
+        user = crud.login_check(username, password)
         #if the user_id num is returned then succesffully logged in! 
-        if user_id:
+        if user:
+            crud.login_track(user)
             return redirect('/chat')
 
     return render_template("login.html", form=form)
