@@ -40,6 +40,8 @@ class User(UserMixin, db.Model):
 
 class Compliment(db.Model):
     """User specific compliments table"""
+    __tablename__ = 'positive'
+    
     comp_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
@@ -48,6 +50,8 @@ class Compliment(db.Model):
 
 class Insult(db.Model):
     """User specific insults table"""
+    __tablename__ = 'negative'
+
     insul_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
@@ -56,6 +60,9 @@ class Insult(db.Model):
 
 class Adjectives(db.Model):
     """ALL the list of words combined"""
+
+    __tablename__ = 'words'
+
     adj_id = db.Column(db.Integer,
                     autoincrement=True,
                     primary_key=True)

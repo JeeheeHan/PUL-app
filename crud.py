@@ -43,6 +43,14 @@ def login_track(username):
     user.last_login = datetime.utcnow
     return user.last_login
     
+def create_adjectives(word_type, word):
+    """Put each word in text file into adjectives table"""
+    adj = Adjectives(word_type= word_type,
+                        word = word)
+    db.session.add(adj)
+    db.session.commit()
+    
+    return adj
 
 
 if __name__ == '__main__':
