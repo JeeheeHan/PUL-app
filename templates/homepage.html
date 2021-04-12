@@ -3,20 +3,8 @@
 {% block head %}
   <!-- <link rel="stylesheet" href="/style/style.css"> -->
   <script crossorigin src="https://code.jquery.com/jquery-3.4.1.js"></script>
-  <!-- <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script> -->
   <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
-  <script src="https://d3js.org/d3.v6.min.js"></script>
-  <script src = "static/words.js" type="module"></script>
 
-  <script type="module">
-
-    import define from "./words.js";
-    import {Runtime, Library, Inspector} from "./runtime.js";
-    
-    const runtime = new Runtime();
-    const main = runtime.module(define, Inspector.into(document.body));
-    
-  </script>
   
 {% endblock head %}
 
@@ -40,8 +28,11 @@
       Chat server <a href="/chat"> Here</a>
   </p>
 </div>
+<div>
+  <p>
+      Word List here <a href="/words"> Here</a>
+  </p>
+</div>
 
-
-  <!-- <script src="/static/homepage.js" type="text/js"></script> -->
 
 {% endblock %}

@@ -52,7 +52,11 @@ def create_adjectives(word_type, word):
     
     return adj
 
+def get_words():
+    """This gets all the words"""
+    return Adjectives.query.all()
 
+    
 if __name__ == '__main__':
     from server import app
     connect_to_db(app)

@@ -101,6 +101,11 @@ def register_user():
 
     return render_template("register.html", form=form)
 
+@app.route('/words')
+def all_words():
+    """Just print all the words on there"""
+    words = crud.get_words()
+    return render_template("plant.html", words=words)
 
 #let's run this thing! 
 
