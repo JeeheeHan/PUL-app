@@ -1,6 +1,7 @@
 """Create, read, update and delete"""
 
 from model import *
+from textblob import TextBlob
 
 def create_user(user, pwd):
     """Create and return a new user."""
@@ -56,7 +57,27 @@ def get_words():
     """This gets all the words"""
     return Adjectives.query.all()
 
-    
+
+#need a function to get the top 30 words used..
+#https://textblob.readthedocs.io/en/dev/quickstart.html#quickstart
+#The sentiment property returns a namedtuple of the form Sentiment(polarity,
+#subjectivity). The polarity score is a float within the range [-1.0, 1.0]. The subjectivity is a
+#float within the range [0.0, 1.0] where 0.0 is very objective and 1.0 is very subjective.
+
+def get_latest_messages():
+    """Get the last 50 messages from message table"""
+    list_inputs = General_chat.query.order_by(General_chat.chatID.desc()).limit(50).all()
+    return ''.join(item.message for item in list_inputs)
+     #Get the last 50 messages and put it into one big string
+
+def get_sentiment():
+    """Get sentiment level from the last 50 messages"""
+    text = get_latest_messages()
+    status = TextBlob(text).sentiment.polarity
+    return status
+
+
+
 if __name__ == '__main__':
     from server import app
     connect_to_db(app)

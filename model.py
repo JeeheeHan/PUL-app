@@ -83,7 +83,6 @@ class General_chat(db.Model):
     user = db.relationship('User', backref='General_chat')
 
 
-
 if __name__ == '__main__':
     from server import app
 

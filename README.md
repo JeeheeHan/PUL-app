@@ -37,17 +37,17 @@ galvanometer
 - Users can login
 - Main chat room would show 
 - Users can "feed" a virtual plant of choosing compliment or insult
-- Have a generation of words to use and show on homepage as a occlusion
 - Alert user the instructions and purpose behind this app after loggin in
-- Frequency of the compliments or insults
-- dashboard of top used compliments or insults???
+
 
 #### 2.0
 
 - User can have a multiple plants
-- User can drag the words to the plant to "feed" 
+- Creating a sentiment data
+- Have a generation of words to use and show on homepage as a occlusion(TBD)
 - Send notification to emails regarding plant status
-- Get to full sentences
+- Frequency of the compliments or insults
+- dashboard of top used compliments or insults???
 
 #### 3.0
 

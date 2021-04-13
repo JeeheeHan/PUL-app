@@ -96,7 +96,7 @@ def register_user():
         new_user = crud.create_user(username,password)
         #though create_user function was wrong but not the case... hmmm
 
-        flash('Welcome New User! Please log in')
+        # flash('Welcome New User! Please log in')
         return redirect("/login")
 
     return render_template("register.html", form=form)
