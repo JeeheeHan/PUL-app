@@ -38,7 +38,7 @@ def homepage():
 #Flask-SocketIO also dispatches connection and disconnection events
 @app.route('/chat')
 def testsocket():
-    return render_template("testsocket.html")
+    return render_template("public.html")
 
 @socketio.on('connect')
 def connected():
@@ -58,6 +58,14 @@ def handle_message(data):
         crud.save_chat_message(data)
     emit('new line',data, broadcast=True)
 
+
+#Wait for front end to call for plant call 
+@app.route('/plantCall')
+def send_sentiment():
+    """Emit the latest sentiment num"""
+    num = crud.get_sentiment()
+    # socketio.emit('sentiment', str(num))
+    return str(num)
 
 
 
@@ -80,6 +88,7 @@ def login():
             return redirect('/chat')
 
     return render_template("login.html", form=form)
+    # pass in the most recent sentiment and have plant status to change using jinja
 
 @app.route('/register', methods=['POST', 'GET'])
 def register_user():
@@ -96,7 +105,6 @@ def register_user():
         new_user = crud.create_user(username,password)
         #though create_user function was wrong but not the case... hmmm
 
-        # flash('Welcome New User! Please log in')
         return redirect("/login")
 
     return render_template("register.html", form=form)
