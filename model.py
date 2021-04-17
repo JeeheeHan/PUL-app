@@ -38,26 +38,7 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f'<User user_id:{self.user_id}>'
 
-class Compliment(db.Model):
-    """User specific compliments table"""
-    __tablename__ = 'positive'
-    
-    comp_id = db.Column(db.Integer,
-                        autoincrement=True,
-                        primary_key=True)
-    word = db.Column(db.String)
-    count = db.Column(db.Integer)
-
-class Insult(db.Model):
-    """User specific insults table"""
-    __tablename__ = 'negative'
-
-    insul_id = db.Column(db.Integer,
-                        autoincrement=True,
-                        primary_key=True)
-    word = db.Column(db.String)
-    count = db.Column(db.Integer)
-
+#remember to add the repr
 class Adjectives(db.Model):
     """ALL the list of words combined"""
 
@@ -78,9 +59,25 @@ class General_chat(db.Model):
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     #review this later in case of message time stamp thing 
     userID = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    message = db.Column(db.String, nullable= False)
+    message = db.Column(db.Text, nullable= False)
+    # nlpID = db.Column(db.Integer, db.ForeignKey('nlp.id'))
 
     user = db.relationship('User', backref='General_chat')
+    # nlp = db.relationship('NLP', backref='nlp')
+
+class NLP(db.Model):
+    """NLP table"""
+    __tablename__ = 'nlp'
+
+    id = db.Column(db.Integer, primary_key = True)
+    userID = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    word_count = db.Column(db.Integer)
+    polarity = db.Column(db.Float)
+    filtered_words = db.Column(db.Text)
+    #going to string the words
+    
+    user = db.relationship('User', backref='NLP')
+
 
 
 if __name__ == '__main__':

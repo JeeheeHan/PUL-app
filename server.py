@@ -56,6 +56,7 @@ def handle_message(data):
     #Save the incoming messages into General_chat table
     if data['username']:
         crud.save_chat_message(data)
+        crud.save_nlp(data)
     emit('new line',data, broadcast=True)
 
 

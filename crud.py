@@ -27,16 +27,40 @@ def login_check(username, password):
         pass
         # raise ValidationError("Wrong credentials, please try again")
 
-def save_chat_message(data):
-    """Saving chat message into DB"""
+def get_user_id(data):
+    """Get the user_id from DB"""
     username = data['username']
     user_id = User.query.filter_by(username=username).first().user_id
+
+    return user_id
+
+def save_chat_message(data):
+    """Saving chat message into DB"""
+    user_id = get_user_id(data)
     message = data['message']
     timestamp = data['timestamp']
 
     db.session.add(General_chat(message=message, userID=user_id, timestamp=timestamp))
     db.session.commit()
-    
+
+def save_nlp(data):
+    """Saving analysis to NLP Table"""
+    user_id = get_user_id(data)
+    message = data['message']
+    blob = TextBlob(message)
+
+    list_of_word = blob.words
+    polarity = blob.sentiment.polarity
+
+    words = " ".join(list_of_word)
+    #string the list of tokenized words to save into DB
+    word_count = len(list_of_word)
+
+    db.session.add(NLP(userID=user_id, word_count= word_count, polarity=polarity, filtered_words=list_of_word))
+    db.session.commit()
+
+
+
 
 def login_track(username):
     """Saving last logged into DB"""
@@ -75,6 +99,8 @@ def get_sentiment():
     text = get_latest_messages()
     status = TextBlob(text).sentiment.polarity
     return status
+
+
 
 
 
