@@ -55,9 +55,13 @@ def handle_message(data):
     print('new line', data)
     #Save the incoming messages into General_chat table
     if data['username']:
-        crud.save_chat_message(data)
-        crud.save_nlp(data)
+        chatID = crud.save_chat_message(data)
+        #returns the latest chat id 
+        comp_or_neg = crud.save_nlp(data, chatID)
+        data['polarity'] = comp_or_neg
+        #Adding a new key/value to the data dictionary
     emit('new line',data, broadcast=True)
+
 
 
 #Wait for front end to call for plant call 

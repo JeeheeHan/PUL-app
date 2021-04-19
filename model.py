@@ -60,10 +60,8 @@ class General_chat(db.Model):
     #review this later in case of message time stamp thing 
     userID = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     message = db.Column(db.Text, nullable= False)
-    # nlpID = db.Column(db.Integer, db.ForeignKey('nlp.id'))
 
     user = db.relationship('User', backref='General_chat')
-    # nlp = db.relationship('NLP', backref='nlp')
 
 class NLP(db.Model):
     """NLP table"""
@@ -71,12 +69,14 @@ class NLP(db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
     userID = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    chatID = db.Column(db.Integer, db.ForeignKey('chat.chatID'))
     word_count = db.Column(db.Integer)
     polarity = db.Column(db.Float)
     filtered_words = db.Column(db.Text)
     #going to string the words
     
     user = db.relationship('User', backref='NLP')
+    chat = db.relationship('General_chat', backref='NLP')
 
 
 

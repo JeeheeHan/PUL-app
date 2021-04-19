@@ -34,8 +34,10 @@ def get_user_id(data):
 
     return user_id
 
+
+
 def save_chat_message(data):
-    """Saving chat message into DB"""
+    """Saving chat message into DB and return chat ID"""
     user_id = get_user_id(data)
     message = data['message']
     timestamp = data['timestamp']
@@ -43,11 +45,26 @@ def save_chat_message(data):
     db.session.add(General_chat(message=message, userID=user_id, timestamp=timestamp))
     db.session.commit()
 
-def save_nlp(data):
-    """Saving analysis to NLP Table"""
+    return General_chat.query.order_by(General_chat.chatID.desc()).first().chatID
+    #get the latest input added 
+
+def print_pos_neg(num):
+    """Print if positive or negative in polarity level"""
+    
+    if num > 0:
+        return "positive"
+    elif num == 0: 
+        return "neutral"
+    else:
+        return "negative"
+
+
+def save_nlp(data, chatID):
+    """Saving analysis to NLP Table and return if positive or negative"""
     user_id = get_user_id(data)
     message = data['message']
-    blob = TextBlob(message)
+    blob = TextBlob(message).correct()
+    #This is to run the correction function to get the right spelling of vocabs
 
     list_of_word = blob.words
     polarity = blob.sentiment.polarity
@@ -56,9 +73,10 @@ def save_nlp(data):
     #string the list of tokenized words to save into DB
     word_count = len(list_of_word)
 
-    db.session.add(NLP(userID=user_id, word_count= word_count, polarity=polarity, filtered_words=list_of_word))
+    db.session.add(NLP(userID=user_id, word_count= word_count, polarity=polarity, filtered_words=list_of_word, chatID=chatID))
     db.session.commit()
 
+    return print_pos_neg(polarity)
 
 
 

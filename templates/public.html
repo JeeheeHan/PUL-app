@@ -35,7 +35,7 @@
       
       //pt2: jquery ajax to get the values from the form 
       const form = $( 'form.chat' ).on( 'submit', function ( e ){
-        e.preventDefault()
+        e.preventDefault();
         //ignore the action 
         let username = $( 'input.username' ).val()
         let userMessage = $( 'input.message' ).val()
@@ -55,8 +55,25 @@
       if( typeof data.username !== 'undefined' ) {
         $( 'h3' ).remove()
         $( 'div.message_holder' ).append( '<div><b style="color: #000">'+data.username+'</b> '+data.message+'</div>' )
+        console.log(data)
+        $( 'div.plant').append( '<div>'+data.polarity+'</div>' )
       }
     });
+
+
+    // const compNeg = $('form.chat').on('click', function(e){
+    //   e.preventDefault();
+      
+    //   $.get("/sentiment", (res) =>{
+    //     let status = res;
+    //     if (status == "positive") {
+    //       console.log("positive")
+    //     }
+    //     else {
+    //       console.log("negative")
+    //     };
+    //   });
+    // });
 
     const test = $('form.plant').on('click', function(e){
         e.preventDefault();
