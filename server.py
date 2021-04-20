@@ -99,7 +99,7 @@ def login():
         crud.login_track(user.username)
         login_user(user)
 
-        return redirect('/chat')
+        return redirect('/')
 
 
     return render_template("login.html", form=form)

@@ -16,6 +16,7 @@ static/
 words.html
 text_crud.py
 test.py
-index.html
 routes.py
+public.html
+
 
