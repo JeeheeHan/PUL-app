@@ -18,7 +18,9 @@
     <form class="plant" action = "plantCall">
     <input id="test" type="button" value="Click Me"></form>
   </div>
+  <div class="counter">
 
+  </div>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
@@ -50,42 +52,58 @@
       //pt4: adding the message into the screen waiting for emit 'my response'   
     });
 
+    // function statusCounter(counter){
+    //     let positiveCount = 0;
+    //     let negativeCount = 0;
+
+    //     if (counter == "positive") {
+    //       positiveCount++;
+    //       return positiveCount;
+    //     }
+    //     else if (counter == "negative") {
+    //       negativeCount++;
+    //       return negativeCount;
+    //     }; 
+    //     };
+    let positiveCount = 0;
+    let negativeCount = 0;
+
     socket.on( 'new line', function( data ) {
         // console.log( data )
+      function statusCounter(counter){
+        // let positiveCount = 0;
+        // let negativeCount = 0;
+
+        if (counter == "positive") {
+          positiveCount++;
+          return positiveCount;
+        }
+        else if (counter == "negative") {
+          negativeCount++;
+          return negativeCount;
+        }; 
+        };
+
       if( typeof data.username !== 'undefined' ) {
         $( 'h3' ).remove()
         $( 'div.message_holder' ).append( '<div><b style="color: #000">'+data.username+'</b> '+data.message+'</div>' )
-        console.log(data)
-        $( 'div.plant').append( '<div>'+data.polarity+'</div>' )
+        statusCounter(data.polarity)
+        $( 'div.counter').html( '<div>'+positiveCount+'</div>' )      
       }
     });
 
 
-    // const compNeg = $('form.chat').on('click', function(e){
-    //   e.preventDefault();
-      
-    //   $.get("/sentiment", (res) =>{
-    //     let status = res;
-    //     if (status == "positive") {
-    //       console.log("positive")
-    //     }
-    //     else {
-    //       console.log("negative")
-    //     };
-    //   });
+    // const test = $('form.plant').on('click', function(e){
+    //     e.preventDefault();
+
+    //     $.get("/plantCall", (res) =>{
+    //         let num = Number(res);
+    //         if (num) {
+    //             $( 'div.plant' ).append('<div><p>'+num+'</p></div>')
+    //         };
+
+    //     });
     // });
-
-    const test = $('form.plant').on('click', function(e){
-        e.preventDefault();
-
-        $.get("/plantCall", (res) =>{
-            let num = Number(res);
-            if (num) {
-                $( 'div.plant' ).append('<div><p>'+num+'</p></div>')
-            };
-
-        });
-    });
 
 
   </script>

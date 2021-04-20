@@ -5,6 +5,9 @@ from datetime import datetime
 #using Universal Time Log
 from flask_login import UserMixin
 
+from werkzeug.security import generate_password_hash,check_password_hash
+
+
 db = SQLAlchemy()
 
 def connect_to_db(flask_app, db_uri = 'postgresql:///pul_db', echo=True):
@@ -17,26 +20,30 @@ def connect_to_db(flask_app, db_uri = 'postgresql:///pul_db', echo=True):
 
     print('Connect to DB!')
 
+
 class User(UserMixin, db.Model):
     #to be able to call the 4 methods from flask Login mod
     """ A user table class"""
     __tablename__ ='users'
 
-    user_id = db.Column(db.Integer,
+    id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
     username = db.Column(db.String(24), unique=True)
-    # email = db.Column(db.String, unique=True)
     password = db.Column(db.String, nullable= False)
     created_at = db.Column(db.DateTime, nullable=False,default=datetime.utcnow)
     last_login = db.Column(db.DateTime, nullable=False,default=datetime.utcnow)
 
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-        
+    def set_password(self, password):
+        """Hash out the passwords"""
+        self.password = generate_password_hash(password)
+    def check_password(self, pwd):
+        """Match passwords"""
+        return check_password_hash(self.password, pwd)
+
+
     def __repr__(self):
-        return f'<User user_id:{self.user_id}>'
+        return f'<Username:{self.username}>'
 
 #remember to add the repr
 class Adjectives(db.Model):
@@ -58,7 +65,7 @@ class General_chat(db.Model):
     chatID = db.Column(db.Integer,primary_key=True)
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     #review this later in case of message time stamp thing 
-    userID = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    userID = db.Column(db.Integer, db.ForeignKey('users.id'))
     message = db.Column(db.Text, nullable= False)
 
     user = db.relationship('User', backref='General_chat')
@@ -68,7 +75,7 @@ class NLP(db.Model):
     __tablename__ = 'nlp'
 
     id = db.Column(db.Integer, primary_key = True)
-    userID = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    userID = db.Column(db.Integer, db.ForeignKey('users.id'))
     chatID = db.Column(db.Integer, db.ForeignKey('chat.chatID'))
     word_count = db.Column(db.Integer)
     polarity = db.Column(db.Float)

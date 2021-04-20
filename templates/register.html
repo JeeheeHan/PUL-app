@@ -1,10 +1,6 @@
 {% extends 'base.html' %}
 
 {% block head %}
-  <!-- <link rel="stylesheet" href="/style/style.css"> -->
-  <script crossorigin src="https://code.jquery.com/jquery-3.4.1.js"></script>
-  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
-
 {% endblock head %}
 
 {% block body %}
@@ -37,7 +33,6 @@
     </dl>
     <p>
       {{ form.submit(class="button is-sucess")}}</p>
-      <!-- <p><button type="submit">Submit</button></p> -->
   </form>
 
   <div>
@@ -45,8 +40,5 @@
           Login here <a href="/login">by clicking</a>
       </p>
   </div>
-
-
-  <!-- <script src="/static/homepage.js" type="text/js"></script> -->
 
 {% endblock %}

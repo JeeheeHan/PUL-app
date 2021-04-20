@@ -6,7 +6,9 @@ from textblob import TextBlob
 def create_user(user, pwd):
     """Create and return a new user."""
 
-    user = User(username=user, password=pwd)
+    user = User(username=user)
+    #Using class fucntion to set password using hash
+    user.set_password(pwd)
 
     db.session.add(user)
     db.session.commit()
@@ -19,18 +21,18 @@ def login_check(username, password):
     #https://wtforms.readthedocs.io/en/2.3.x/fields/
     try: 
         user = User.query.filter_by(username=username).first()
-        password_by_username = user.password
+        # password_by_username = user.password
 
-        if password == password_by_username:
-            return user.username
+        if user.check_password(password):
+            return user
     except:
         pass
-        # raise ValidationError("Wrong credentials, please try again")
+
 
 def get_user_id(data):
     """Get the user_id from DB"""
     username = data['username']
-    user_id = User.query.filter_by(username=username).first().user_id
+    user_id = User.query.filter_by(username=username).first().id
 
     return user_id
 
@@ -84,8 +86,7 @@ def login_track(username):
     """Saving last logged into DB"""
     user = User.query.filter_by(username=username).first()
     user.last_login = datetime.utcnow
-    return user.last_login
-    
+
 def create_adjectives(word_type, word):
     """Put each word in text file into adjectives table"""
     adj = Adjectives(word_type= word_type,

@@ -1,9 +1,9 @@
 """Server for PUL web app"""
 
-from flask import Flask, render_template, request, redirect, jsonify, request
+from flask import Flask, render_template, request, redirect, jsonify, request, flash
 from jinja2 import StrictUndefined
 from flask_socketio import SocketIO, emit
-from flask_login import LoginManager
+from flask_login import LoginManager,current_user,login_user,logout_user
 from flask_session import Session
 
 from model import *
@@ -12,28 +12,26 @@ from login import *
 import crud
 
 app = Flask(__name__)
+
 app.secret_key = "test"
 app.config['SESSION_TYPE'] = 'filesystem'
 
 app.jinja_env.undefined = StrictUndefined
 
 #Declaring loginmanager into a var and using it as a decorator to check if user is logged in
-login_manager = LoginManager()
+login_manager = LoginManager(app)
 #Since socket io will branch off after copying the sessions, we need to turn off manage session for flask session works
 Session(app)
 #create the server with the var socketio
 socketio = SocketIO(app, manage_session=False)
 
-
-
-#Checking to see if user is already logged
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
 @app.route('/')
 def homepage():
-    return render_template("homepage.html")
+    return render_template("index.html")
 
 #Flask-SocketIO also dispatches connection and disconnection events
 @app.route('/chat')
@@ -72,11 +70,16 @@ def send_sentiment():
     # socketio.emit('sentiment', str(num))
     return str(num)
 
-
+def check_if_logged_in():
+    """Check if the user was already logged in"""
+    if current_user.is_authenticated:
+        return redirect("index.html")
 
 @app.route('/login', methods= ['POST', 'GET'])
 def login():
     """login with credentials"""
+    check_if_logged_in()
+
     form = LoginForm(request.form)
 
     #WTF built in function will check for my convenience
@@ -87,10 +90,17 @@ def login():
         password = form.password.data
 
         user = crud.login_check(username, password)
-        #if the user_id num is returned then succesffully logged in! 
-        if user:
-            crud.login_track(user)
-            return redirect('/chat')
+        #if user is returned then success! 
+        if user is None:
+            flash('Invalid username or password')
+            return redirect('/login')        
+ 
+
+        crud.login_track(user.username)
+        login_user(user)
+
+        return redirect('/chat')
+
 
     return render_template("login.html", form=form)
     # pass in the most recent sentiment and have plant status to change using jinja
@@ -98,21 +108,25 @@ def login():
 @app.route('/register', methods=['POST', 'GET'])
 def register_user():
     """Create a new user."""
-    form = RegisterForm(request.form)
+    check_if_logged_in()
 
+    form = RegisterForm(request.form)
 
     if form.validate_on_submit():
         username =form.username.data
-        print(username)
         password= form.password.data
-        print(password)
-    
         new_user = crud.create_user(username,password)
-        #though create_user function was wrong but not the case... hmmm
 
         return redirect("/login")
 
     return render_template("register.html", form=form)
+
+@app.route('/logout')
+def logout():
+    """Log out using flask login lib"""
+    logout_user()
+    return redirect("/")
+
 
 @app.route('/words')
 def all_words():
