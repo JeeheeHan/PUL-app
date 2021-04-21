@@ -107,20 +107,23 @@ def get_words():
 #subjectivity). The polarity score is a float within the range [-1.0, 1.0]. The subjectivity is a
 #float within the range [0.0, 1.0] where 0.0 is very objective and 1.0 is very subjective.
 
-def get_latest_messages():
-    """Get the last 50 messages from message table"""
-    list_inputs = General_chat.query.order_by(General_chat.chatID.desc()).limit(50).all()
-    return ''.join(item.message for item in list_inputs)
-     #Get the last 50 messages and put it into one big string
+# def get_latest_messages():
+#     """Get the last 50 messages from message table"""
+#     list_inputs = General_chat.query.order_by(General_chat.chatID.desc()).limit(50).all()
+#     return ''.join(item.message for item in list_inputs)
+#      #Get the last 50 messages and put it into one big string
 
-def get_sentiment():
-    """Get sentiment level from the last 50 messages"""
-    text = get_latest_messages()
-    status = TextBlob(text).sentiment.polarity
-    return status
+# def get_sentiment():
+#     """Get sentiment level from the last 50 messages"""
+#     text = get_latest_messages()
+#     status = TextBlob(text).sentiment.polarity
+#     return status
 
-
-
+def get_messages():
+    """Get a list of messages by the chatID"""
+    lst_messages = General_chat.query.order_by(General_chat.chatID.asc()).all()
+    return lst_messages
+    
 
 
 if __name__ == '__main__':

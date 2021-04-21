@@ -31,7 +31,8 @@ def load_user(user_id):
 
 @app.route('/')
 def homepage():
-    return render_template("index.html")
+    messages = crud.get_messages()
+    return render_template("index.html", messages = messages)
 
 #Flask-SocketIO also dispatches connection and disconnection events
 @app.route('/chat')
