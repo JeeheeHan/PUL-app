@@ -31,8 +31,9 @@ def load_user(user_id):
 
 @app.route('/')
 def homepage():
+    count_dict = crud.count_pos_neg()
     messages = crud.get_messages()
-    return render_template("index.html", messages = messages)
+    return render_template("index.html", messages = messages, count = count_dict)
 
 #Flask-SocketIO also dispatches connection and disconnection events
 @app.route('/chat')

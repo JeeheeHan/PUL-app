@@ -12,8 +12,16 @@
     <div class="row">
       <div class="col">
         <div>
-          <div class="counter"></div>
-          
+          <div class="counter">
+            {% for key,item in count.items() %}
+            <ul>
+              <li>
+                {{key}}:{{item}}
+              </li>
+            </ul>
+            {% endfor %}
+          </div>
+
           <ul>
             {% for msg in messages %}
             <li>{{ msg.message }}</li>

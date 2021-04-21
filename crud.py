@@ -102,23 +102,18 @@ def get_words():
     return Adjectives.query.all()
 
 
-#need a function to get the top 30 words used..
-#https://textblob.readthedocs.io/en/dev/quickstart.html#quickstart
-#The sentiment property returns a namedtuple of the form Sentiment(polarity,
-#subjectivity). The polarity score is a float within the range [-1.0, 1.0]. The subjectivity is a
-#float within the range [0.0, 1.0] where 0.0 is very objective and 1.0 is very subjective.
+def count_pos_neg():
+    """Get a dictionary of positive to negative messages with count in nlp table"""
+    all_messages = NLP.query.all()
+    pos_list = [msg for msg in all_messages if msg.polarity > 0]
+    neg_list = [msg for msg in all_messages if msg.polarity < 0]
 
-# def get_latest_messages():
-#     """Get the last 50 messages from message table"""
-#     list_inputs = General_chat.query.order_by(General_chat.chatID.desc()).limit(50).all()
-#     return ''.join(item.message for item in list_inputs)
-#      #Get the last 50 messages and put it into one big string
+    count_dict = {}
 
-# def get_sentiment():
-#     """Get sentiment level from the last 50 messages"""
-#     text = get_latest_messages()
-#     status = TextBlob(text).sentiment.polarity
-#     return status
+    count_dict['positive'] = len(pos_list)
+    count_dict['negative'] = len(neg_list)
+
+    return count_dict
 
 def get_messages():
     """Get a list of messages by the chatID"""
