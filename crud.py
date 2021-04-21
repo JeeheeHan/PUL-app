@@ -61,6 +61,7 @@ def print_pos_neg(num):
         return "negative"
 
 
+
 def save_nlp(data, chatID):
     """Saving analysis to NLP Table and return if positive or negative"""
     user_id = get_user_id(data)
