@@ -13,13 +13,14 @@
       <div class="col">
         <div>
           <div class="counter">
-            {% for key,item in count.items() %}
             <ul>
               <li>
-                {{key}}:{{item}}
+                Positive:<span id = "positive">{{count["positive"]}}</span>
+              </li>
+              <li>
+                Negative:<span id = "negative">{{count["negative"]}}</span>
               </li>
             </ul>
-            {% endfor %}
           </div>
 
           <ul>

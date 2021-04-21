@@ -12,7 +12,7 @@ chat.jsx
 flask_session
 chat.js
 words.js
-static/
+images/
 words.html
 text_crud.py
 test.py
