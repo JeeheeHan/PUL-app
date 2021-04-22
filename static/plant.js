@@ -1,3 +1,4 @@
+let counts= {'negative': Number($('#negative').text()), 'positive': Number($('#negative').text())};
 
 const statusCounter = (pol) => {
   //Count function to add into counts dictionary per every message
@@ -8,25 +9,34 @@ const statusCounter = (pol) => {
   else if (pol == "negative") {
     counts.negative++;
     };
+  // socket.emit( 'plant health', {positive : counts.positive, negative : counts.negative});
   return counts;
 
 };
 
-let counts= {'negative': Number($('#negative').text()), 'positive': Number($('#negative').text())};
+socket.on( 'new line',( data ) => {
 
+  // if( typeof data.username !== 'undefined' ) {
+  //   $( 'h3' ).remove()
+  //   $( 'div.message_holder' ).append( '<div><b style="color: #000">'+data.username+'</b> '+data.message+'</div>' )
+  // };
+  //get my counts dictionary from the fucntion statusCounter
+  let counts = statusCounter(data.polarity);
+  // socket.emit( 'plant health', {positive : counts.positive, negative : counts.negative});
+  $( '#positive').html( counts.positive);
+  $( '#negative').html( counts.negative);
+  socket.emit('health', {positive : counts.positive.toString(), negative : counts.negative.toString()});
 
-socket.on( 'new line', function( data ) {
-
-    if( typeof data.username !== 'undefined' ) {
+  if( typeof data.username !== 'undefined' ) {
     $( 'h3' ).remove()
     $( 'div.message_holder' ).append( '<div><b style="color: #000">'+data.username+'</b> '+data.message+'</div>' )
-    // let positiveCount = Number($('#positive').val());  //{{count["positive"]}}
-    // let negativeCount = Number($('#negative').val());
-    //get my counts dictionary from the fucntion statusCounter
-    let counts = statusCounter(data.polarity);
-    $( '#positive').html( counts.positive)
-    $( '#negative').html( counts.negative)
-    };
+  };
+});
+
+
+socket.on('my_image', ( data ) =>{
+  console.log(data);
+  // $('#plant-img img').attr('src', data.pic);
 });
 
 

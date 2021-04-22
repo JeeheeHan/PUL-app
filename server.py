@@ -11,6 +11,7 @@ from login import *
 
 import crud
 
+
 app = Flask(__name__)
 
 app.secret_key = "test"
@@ -29,6 +30,7 @@ socketio = SocketIO(app, manage_session=False)
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
 @app.route('/')
 def homepage():
     count_dict = crud.count_pos_neg()
@@ -36,9 +38,9 @@ def homepage():
     return render_template("index.html", messages = messages, count = count_dict)
 
 #Flask-SocketIO also dispatches connection and disconnection events
-@app.route('/chat')
-def testsocket():
-    return render_template("public.html")
+# @app.route('/chat')
+# def testsocket():
+#     return render_template("public.html")
 
 @socketio.on('connect')
 def connected():
@@ -62,15 +64,31 @@ def handle_message(data):
         #Adding a new key/value to the data dictionary
     emit('new line',data, broadcast=True)
 
+@socketio.on('health')
+def handle_plant_health(data):
+    print(data)
+    diff = int(data['positive']) - int(data['negative'])
+    print("*"*50)
+    print(diff)
+    print("*"*50)
+
+    emit('my_image',{"test":"test"}, broadcast=True)
+
+    # happy = open("/static/images/plant2.png", 'rb').read()
+    # sad = open("/static/images/plant3.png", 'rb').read()
+    # if diff > 10:
+    #     emit('my_image', {'plant_pic': "plant_pic", 'pic': "/static/images/plant2.png"})
+    # elif diff < -10:
+    #     emit('my_image', {'plant_pic': "plant_pic", 'pic': "/static/images/plant3.png"})
 
 
 #Wait for front end to call for plant call 
-@app.route('/plantCall')
-def send_sentiment():
-    """Emit the latest sentiment num"""
-    num = crud.get_sentiment()
-    # socketio.emit('sentiment', str(num))
-    return str(num)
+# @app.route('/plantCall')
+# def send_sentiment():
+#     """Emit the latest sentiment num"""
+#     num = crud.get_sentiment()
+#     # socketio.emit('sentiment', str(num))
+#     return str(num)
 
 def check_if_logged_in():
     """Check if the user was already logged in"""
