@@ -102,7 +102,6 @@ def get_words():
     """This gets all the words"""
     return Adjectives.query.all()
 
-
 def count_pos_neg():
     """Get a dictionary of positive to negative messages with count in nlp table"""
     #Before
@@ -126,7 +125,30 @@ def get_messages():
     """Get a list of messages by the chatID"""
     lst_messages = General_chat.query.order_by(General_chat.chatID.asc()).all()
     return lst_messages
+####Just going to use these functions to decide on the overall polarity for the latest 50 messages when a user connects#######
+def get_latest_messages():
+    """Get the last 50 messages from message table"""
+    list_inputs = General_chat.query.order_by(General_chat.chatID.desc()).limit(50).all()
+    return ''.join(item.message for item in list_inputs)
+     #Get the last 50 messages and put it into one big string
+
+def get_sentiment():
+    """Get sentiment level from the last 50 messages"""
+    text = get_latest_messages()
+    status = TextBlob(text).sentiment.polarity
+    return status
     
+def get_plant_status(num):
+    """"Return a number so that the appropriate image can be called"""
+    if num < -0.5:
+        return 1
+    elif num < 0:
+        return 2
+    elif num < 0.5:
+        return 3
+    elif num < 1:
+        return 4
+        
 
 
 if __name__ == '__main__':
