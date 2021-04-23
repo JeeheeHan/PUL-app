@@ -129,8 +129,8 @@ def get_messages():
 def get_latest_messages():
     """Get the last 50 messages from message table"""
     list_inputs = General_chat.query.order_by(General_chat.chatID.desc()).limit(50).all()
-    return ''.join(item.message for item in list_inputs)
-     #Get the last 50 messages and put it into one big string
+    return ' '.join(item.message for item in list_inputs)
+     #Get the last 50 messages and put it into one big string also make sure to seperate them out by spaces
 
 def get_sentiment():
     """Get sentiment level from the last 50 messages"""
@@ -140,6 +140,8 @@ def get_sentiment():
     
 def get_plant_status(num):
     """"Return a number so that the appropriate image can be called"""
+    print("*"*40)
+    print(num)
     if num < -0.5:
         return 1
     elif num < 0:
@@ -148,7 +150,7 @@ def get_plant_status(num):
         return 3
     elif num < 1:
         return 4
-        
+
 
 
 if __name__ == '__main__':

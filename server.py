@@ -37,6 +37,8 @@ def homepage():
     count_dict = crud.count_pos_neg()
     messages = crud.get_messages()
     num = crud.get_plant_status(crud.get_sentiment())
+    print("*"*40)
+    print(num)
 
     return render_template("index.html", messages = messages, count = count_dict, num = num)
 
@@ -70,16 +72,8 @@ def handle_message(data):
 
 @socketio.on('health')
 def handle_plant_health(data):
-    print(data)
     diff = int(data['positive']) - int(data['negative'])
-    print("*"*50)
-    print(diff)
-    print("*"*50)
 
-    # emit('my_image',{"test":"test"}, broadcast=True)
-
-    # happy = open("/static/images/plant2.png", 'rb').read()
-    # sad = open("/static/images/plant3.png", 'rb').read()
     if diff > 10:
         emit('my_image', {'plant_pic': "plant_pic", 'pic': "/static/images/plant2.png"})
     elif diff < -10:
