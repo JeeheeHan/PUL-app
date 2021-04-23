@@ -40,10 +40,17 @@
         {% endif %}
       </div>
       <div class="col">
-        <!-- <div class="counter"></div>
-        <div class="neg"></div> -->
-        <section id = "plant-img">
+        <!-- <div class="popup" onclick="myFunction()">Click me!
+          <span class="popuptext" id="myPopup">Popup text...</span>
+        </div> -->
+        <section id = "plant-img" onclick="popAQuote()" class="popup">
+          <span class="popuptext" id="plantMessage">I can talk....</span>
           <img src= "/static/images/plant{{num}}.png">
+
+          <!-- <div class="popup" onclick="myFunction()">Click me to toggle the popup!
+            <span class="popuptext" id="myPopup">A Simple Popup!</span>
+          </div> -->
+
         </section>
       </div>
     </div>
@@ -53,6 +60,13 @@
   let negative= {{count.negative}};
   let counts = { 'positive': positive, 'negative':negative};
 </script>
+<script>
+  // When the user clicks on <div>, open the popup
+  function popAQuote() {
+    var popup = document.getElementById("plantMessage");
+    popup.classList.toggle("show");
+  }
+  </script>
 <script type="text/javascript" src="/static/chatty.js"></script>
 <script type="text/javascript" src="/static/plant.js"></script>
 

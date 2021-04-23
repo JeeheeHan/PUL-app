@@ -140,8 +140,6 @@ def get_sentiment():
     
 def get_plant_status(num):
     """"Return a number so that the appropriate image can be called"""
-    print("*"*40)
-    print(num)
     if num < -0.5:
         return 1
     elif num < 0:

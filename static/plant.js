@@ -33,6 +33,8 @@ socket.on( 'new line',( data ) => {
   };
 });
 
+
+
 // socket.on('new line', (data)=>{
 //   $(document).ready(()=>{
 //   let count = statusCounter(data.polarity);
@@ -54,4 +56,8 @@ socket.on('my_image', ( data ) =>{
   $('#plant-img img').attr('src', data.pic);
 });
 
+
+const popup = () => {
+  $('#plantMessage').classlist.toggle("show");
+}
 

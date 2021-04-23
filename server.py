@@ -37,9 +37,7 @@ def homepage():
     count_dict = crud.count_pos_neg()
     messages = crud.get_messages()
     num = crud.get_plant_status(crud.get_sentiment())
-    print("*"*40)
-    print(num)
-
+    
     return render_template("index.html", messages = messages, count = count_dict, num = num)
 
 #Flask-SocketIO also dispatches connection and disconnection events
@@ -75,7 +73,7 @@ def handle_plant_health(data):
     diff = int(data['positive']) - int(data['negative'])
 
     if diff > 10:
-        emit('my_image', {'plant_pic': "plant_pic", 'pic': "/static/images/plant2.png"})
+        emit('my_image', {'plant_pic': "plant_pic", 'pic': "/static/images/plant4.png"})
     elif diff < -10:
         emit('my_image', {'plant_pic': "plant_pic", 'pic': "/static/images/plant3.png"})
 
