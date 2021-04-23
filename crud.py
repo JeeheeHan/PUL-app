@@ -2,6 +2,7 @@
 
 from model import *
 from textblob import TextBlob
+from sqlalchemy import func
 
 def create_user(user, pwd):
     """Create and return a new user."""
@@ -104,14 +105,20 @@ def get_words():
 
 def count_pos_neg():
     """Get a dictionary of positive to negative messages with count in nlp table"""
-    all_messages = NLP.query.all()
-    pos_list = [msg for msg in all_messages if msg.polarity > 0]
-    neg_list = [msg for msg in all_messages if msg.polarity < 0]
+    #Before
+    # all_messages = NLP.query.all()
+    #SELECT count(chatID) FROM NLP WHERE polarity < 0 (TODOO)
+
+    # pos_list = [msg for msg in all_messages if msg.polarity > 0]
+    # neg_list = [msg for msg in all_messages if msg.polarity < 0]
+
+    pos_list= db.session.query(func.count(NLP.polarity)).filter(NLP.polarity>0).scalar()
+    neg_list = db.session.query(func.count(NLP.polarity)).filter(NLP.polarity<0).scalar()
 
     count_dict = {}
 
-    count_dict['positive'] = len(pos_list)
-    count_dict['negative'] = len(neg_list)
+    count_dict['positive'] = pos_list
+    count_dict['negative'] = neg_list
 
     return count_dict
 

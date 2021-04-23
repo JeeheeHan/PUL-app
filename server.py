@@ -25,6 +25,7 @@ login_manager = LoginManager(app)
 Session(app)
 #create the server with the var socketio
 socketio = SocketIO(app, manage_session=False)
+#  cookie=None)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -62,6 +63,7 @@ def handle_message(data):
         comp_or_neg = crud.save_nlp(data, chatID)
         data['polarity'] = comp_or_neg
         #Adding a new key/value to the data dictionary
+    
     emit('new line',data, broadcast=True)
 
 @socketio.on('health')
@@ -72,14 +74,14 @@ def handle_plant_health(data):
     print(diff)
     print("*"*50)
 
-    emit('my_image',{"test":"test"}, broadcast=True)
+    # emit('my_image',{"test":"test"}, broadcast=True)
 
     # happy = open("/static/images/plant2.png", 'rb').read()
     # sad = open("/static/images/plant3.png", 'rb').read()
-    # if diff > 10:
-    #     emit('my_image', {'plant_pic': "plant_pic", 'pic': "/static/images/plant2.png"})
-    # elif diff < -10:
-    #     emit('my_image', {'plant_pic': "plant_pic", 'pic': "/static/images/plant3.png"})
+    if diff > 10:
+        emit('my_image', {'plant_pic': "plant_pic", 'pic': "/static/images/plant2.png"})
+    elif diff < -10:
+        emit('my_image', {'plant_pic': "plant_pic", 'pic': "/static/images/plant3.png"})
 
 
 #Wait for front end to call for plant call 

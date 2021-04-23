@@ -1,5 +1,14 @@
 const socket = io.connect();
 
+// const io = require("socket.io")(httpServer, {
+//   cors: {
+//     origin: "https://example.com",
+//     methods: ["GET", "POST"],
+//     allowedHeaders: ["my-custom-header"],
+//     credentials: true
+//   }
+// });
+
 socket.on( 'connect', () => {
   
     //pt 1; emit login timestamp first to server

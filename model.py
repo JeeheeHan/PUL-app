@@ -86,7 +86,6 @@ class NLP(db.Model):
     chat = db.relationship('General_chat', backref='NLP')
 
 
-
 if __name__ == '__main__':
     from server import app
 
