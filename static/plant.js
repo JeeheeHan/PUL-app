@@ -1,3 +1,4 @@
+// const e = require("cors");
 
 const statusCounter = (pol) => {
   //Count function to add into counts dictionary per every message
@@ -56,8 +57,19 @@ socket.on('my_image', ( data ) =>{
   $('#plant-img img').attr('src', data.pic);
 });
 
+const compliment = $.ajax({
+  url:'https://complimentr.com/api',
+  type: "GET",
+  dataType: 'JSON'
+});
 
-const popup = () => {
-  $('#plantMessage').classlist.toggle("show");
-}
+$('#testPopup').on('click', (e) => {
+  e.preventDefault();
+  
+  compliment.done(function(data){
+    let comps = data.compliment;
+    $('#myPopup').html(comps).toggleClass("show");
+  });
+});
+
 
