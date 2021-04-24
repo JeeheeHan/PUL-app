@@ -5,6 +5,7 @@ from jinja2 import StrictUndefined
 from flask_socketio import SocketIO, emit
 from flask_login import LoginManager,current_user,login_user,logout_user
 from flask_session import Session
+import os
 
 from model import *
 from login import *
@@ -14,13 +15,14 @@ import crud
 
 app = Flask(__name__)
 
-app.secret_key = "test"
+app.secret_key = os.environ['SECRET_KEY']
 app.config['SESSION_TYPE'] = 'filesystem'
 
 app.jinja_env.undefined = StrictUndefined
 
 #Declaring loginmanager into a var and using it as a decorator to check if user is logged in
 login_manager = LoginManager(app)
+login_manager.login_message = ""
 #Since socket io will branch off after copying the sessions, we need to turn off manage session for flask session works
 Session(app)
 #create the server with the var socketio
@@ -108,7 +110,7 @@ def login():
         user = crud.login_check(username, password)
         #if user is returned then success! 
         if user is None:
-            flash('Invalid username or password')
+            flash('Invalid username or password', 'flash')
             return redirect('/login')        
  
 

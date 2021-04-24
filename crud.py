@@ -45,7 +45,9 @@ def save_chat_message(data):
     message = data['message']
     timestamp = data['timestamp']
 
-    db.session.add(General_chat(message=message, userID=user_id, timestamp=timestamp))
+    db.session.add(General_chat(message=message, 
+                                userID=user_id,
+                                timestamp=timestamp))
     db.session.commit()
 
     return General_chat.query.order_by(General_chat.chatID.desc()).first().chatID
@@ -77,7 +79,11 @@ def save_nlp(data, chatID):
     #string the list of tokenized words to save into DB
     word_count = len(list_of_word)
 
-    db.session.add(NLP(userID=user_id, word_count= word_count, polarity=polarity, filtered_words=list_of_word, chatID=chatID))
+    db.session.add(NLP(userID=user_id, 
+                        word_count= word_count,
+                        polarity=polarity,
+                        filtered_words=list_of_word,
+                        chatID=chatID))
     db.session.commit()
 
     return print_pos_neg(polarity)
@@ -104,13 +110,6 @@ def get_words():
 
 def count_pos_neg():
     """Get a dictionary of positive to negative messages with count in nlp table"""
-    #Before
-    # all_messages = NLP.query.all()
-    #SELECT count(chatID) FROM NLP WHERE polarity < 0 (TODOO)
-
-    # pos_list = [msg for msg in all_messages if msg.polarity > 0]
-    # neg_list = [msg for msg in all_messages if msg.polarity < 0]
-
     pos_list= db.session.query(func.count(NLP.polarity)).filter(NLP.polarity>0).scalar()
     neg_list = db.session.query(func.count(NLP.polarity)).filter(NLP.polarity<0).scalar()
 

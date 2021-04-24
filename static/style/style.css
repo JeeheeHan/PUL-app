@@ -12,3 +12,8 @@ section {
 	display: flex;
 	justify-content: center;
 }
+
+.flash {
+  font-family: monospace;
+  color:red;
+}
