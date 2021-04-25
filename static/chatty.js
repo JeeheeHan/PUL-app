@@ -1,3 +1,16 @@
+// $('#testbutton').on('click',(e)=>{
+//   e.preventDefault();
+
+//   const polarity = $.ajax({
+//     url:'/getPolarity',
+//     type:"POST",
+//     data: $('form.getPolar').serialize()
+//   });
+//   polarity.done( ()=>{
+//     console.log("got a respsonse")
+// });
+// });
+
 $(window).on('load', ()=>{
   const socket = io.connect();
 
@@ -55,4 +68,26 @@ $(window).on('load', ()=>{
       $('#myPopup').html(comps).toggleClass("show");
     });
   });
-});
+
+  
+
+
+  // $('button').on('click', (e)=>{
+  //   e.preventDefault();
+
+  //   let 
+  //   $.ajax({
+	// 		url: '/userPolarity',
+	// 		data: $('form').serialize(),
+	// 		type: 'POST',
+	// 		success: function(response){
+	// 			console.log(response);
+	// 		},
+	// 		error: function(error){
+	// 			console.log(error);
+      
+
+
+  });
+// });
+

@@ -93,7 +93,9 @@ def save_nlp(data, chatID):
 def login_track(username):
     """Saving last logged into DB"""
     user = User.query.filter_by(username=username).first()
-    user.last_login = datetime.utcnow
+    user.last_login = datetime.utcnow()
+    db.session.commit()
+
 
 def create_adjectives(word_type, word):
     """Put each word in text file into adjectives table"""
@@ -148,7 +150,9 @@ def get_plant_status(num):
     elif num < 1:
         return 4
 
-
+def print_polarity_from_input(data):
+    """Get the user's selection of sentiment analysis and return the polarity"""
+    pass
 
 if __name__ == '__main__':
     from server import app

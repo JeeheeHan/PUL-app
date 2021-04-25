@@ -1,14 +1,15 @@
 """Server for PUL web app"""
 
-from flask import Flask, render_template, request, redirect, jsonify, request, flash
+from flask import Flask, render_template, request, redirect, jsonify, request, flash, jsonify
 from jinja2 import StrictUndefined
 from flask_socketio import SocketIO, emit
-from flask_login import LoginManager,current_user,login_user,logout_user
+from flask_login import LoginManager,current_user,login_user,logout_user, login_required
 from flask_session import Session
 import os
+from datetime import timedelta
 
 from model import *
-from login import *
+from forms import *
 
 import crud
 
@@ -17,6 +18,11 @@ app = Flask(__name__)
 
 app.secret_key = os.environ['SECRET_KEY']
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_PERMANENT'] = True
+#default session time is 31 days for flask so setting it to 5 mins 
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
+
+
 
 app.jinja_env.undefined = StrictUndefined
 
@@ -39,8 +45,9 @@ def homepage():
     count_dict = crud.count_pos_neg()
     messages = crud.get_messages()
     num = crud.get_plant_status(crud.get_sentiment())
+    form = WordsForm()
     
-    return render_template("index.html", messages = messages, count = count_dict, num = num)
+    return render_template("index.html", messages = messages, count = count_dict, num = num, form=form)
 
 #Flask-SocketIO also dispatches connection and disconnection events
 # @app.route('/chat')
@@ -79,14 +86,6 @@ def handle_plant_health(data):
     elif diff < -10:
         emit('my_image', {'plant_pic': "plant_pic", 'pic': "/static/images/plant3.png"})
 
-
-#Wait for front end to call for plant call 
-# @app.route('/plantCall')
-# def send_sentiment():
-#     """Emit the latest sentiment num"""
-#     num = crud.get_sentiment()
-#     # socketio.emit('sentiment', str(num))
-#     return str(num)
 
 def check_if_logged_in():
     """Check if the user was already logged in"""
@@ -138,6 +137,45 @@ def register_user():
         return redirect("/login")
 
     return render_template("register.html", form=form)
+
+@app.route('/edit_profile', methods=["GET", "POST"])
+@login_required
+def change_password():
+    """Change Password"""
+    form = UserprofileForm()
+    if form.validate_on_submit():
+        username = current_user.username
+        user = crud.login_check(username, form.password.data)
+        #checking if the current password is right
+        if user:
+            user.set_password(form.new_password.data)
+            db.session.commit()
+            flash("New Password Saved!")
+        else:
+            flash("Wrong credentials")
+    elif request.method == "GET":
+        #Return back the username into the form 
+        form.username.data = current_user.username
+    
+    return render_template("words.html", form = form)
+
+@app.route('/getPolarity', methods=["GET","POST"])
+def sentiment_form():
+    #add a if statment if the text is not empty
+    form = WordsForm()
+    print(form.analysis.data)
+    if form.validate_on_submit():
+        print(form.text.data)
+
+    # text=data.text.data
+    # polarity_dict = crud.print_polarity_from_input
+    return jsonify(data=form.errors)
+    #Forms input requriments would be sent out instead
+
+
+
+
+
 
 @app.route('/logout')
 def logout():

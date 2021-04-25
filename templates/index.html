@@ -78,9 +78,28 @@
                 <div class="caption">
                   <p>Lorem ipsum...</p> -->
                 </div>
+              <div>
+                <button type="button" class="btn btn-primary">Primary</button>
+              </div>
+              <div>
+                <p class="polarity">
+                  Polarity:
+                </p>
+                <form action="" class="getPolar" >
+                  <dl>
+                    {{ form.csrf_token }}
+                    {{ form.analysis.label }}:{{ with_errors(form.analysis) }}
+                    {{ form.text.label }}:{{ with_errors(form.text) }}
+                  </dl>
+                  <button type="button" class="btn btn-primary" id="testbutton">Run</button>
+                </form>
+                </div>
+              <div>
+                <p>
+                    edit <a href="/edit_profile"> Here</a>
+                </p>
             </div>
           </div>
-        </section>
       </div>
     </div>
   </div>
@@ -88,6 +107,19 @@
   let positive= {{count.positive}};
   let negative= {{count.negative}};
   let counts = { 'positive': positive, 'negative':negative };
+
+  $('#testbutton').on('click',(e)=>{
+  e.preventDefault();
+
+  const polarity = $.ajax({
+    url:'/getPolarity',
+    type:"POST",
+    data: $('form.getPolar').serialize()
+  });
+  polarity.done( ()=>{
+    console.log("got a respsonse")
+});
+});
 </script>
 <script type="text/javascript" src="/static/chatty.js"></script>
 <!-- <script type="text/javascript" src="/static/plant.js"></script> -->
