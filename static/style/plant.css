@@ -54,3 +54,22 @@
     font-family: monospace;
     color:red;
 }
+.chat-container{
+  height: 400px;
+  overflow: scroll;
+  /* transform: rotate(); */
+  direction: ltr;
+}
+
+.container{
+  width: 400px;
+  margin: 0 auto;
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.sentAt{
+  color: red;
+  display: none;
+}

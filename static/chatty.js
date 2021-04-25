@@ -1,36 +1,58 @@
-const socket = io.connect();
+$(window).on('load', ()=>{
+  const socket = io.connect();
 
-// const io = require("socket.io")(httpServer, {
-//   cors: {
-//     origin: "https://example.com",
-//     methods: ["GET", "POST"],
-//     allowedHeaders: ["my-custom-header"],
-//     credentials: true
-//   }
-// });
-
-socket.on( 'connect', () => {
-  
-    //pt 1; emit login timestamp first to server
+  socket.on( 'connect', () => {
     
-    // socket.emit('messaging', {
-    //   data: "A new user connected!"
-    // });
-
-    
-    //pt2: jquery ajax to get the values from the form 
     const form = $( 'form.chat' ).on( 'submit',  (e )=>{
       e.preventDefault();
-      //ignore the action 
+
       let username = $( 'input.username' ).val()
       let userMessage = $( 'input.message' ).val()
       //String the date time 
       let timestamp= new Date()
-      //Sean complimented me here: user point time stamp accuracy 
-      //Call for messaging decorator
+
       socket.emit ( 'messaging', {username : username, message : userMessage,timestamp : timestamp.toISOString()})
-      //pt3: remove the message in the input line and focus to add the click there
       $( 'input.message' ).val( '' ).focus()
     });
   });
+  const statusCounter = (pol) => {
+    
+    if (pol == "positive") {
+      counts.positive++;
+      }
+    else if (pol == "negative") {
+      counts.negative++;
+      };
+    return counts;
   
+  };
+  socket.on( 'new line',( data ) => {
+    //get my counts dictionary from the fucntion statusCounter
+    let counts = statusCounter(data.polarity);
+    $( '#pos').html( counts.positive);
+    $( '#negative').html( counts.negative);
+    socket.emit('health', {positive : counts.positive.toString(), negative : counts.negative.toString()});
+  
+    if( typeof data.username !== 'undefined' ) {
+      $( 'div.message_holder' ).append( '<div><b style="color: #000">'+data.username+'</b> '+data.message+'</div>' )
+    };
+  });
+  socket.on('my_image', ( data ) =>{
+    $('#plant-img img').attr('src', data.pic);
+  });
+    
+  const compliment = $.ajax({
+    url:'https://complimentr.com/api',
+    type: "GET",
+    dataType: 'JSON'
+  });
+  
+  $('#testPopup').on('click', (e) => {
+    e.preventDefault();
+    
+    compliment.done(function(data){
+      let comps = data.compliment;
+      $('#myPopup').html(comps).toggleClass("show");
+    });
+  });
+});

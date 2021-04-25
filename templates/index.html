@@ -7,7 +7,6 @@
 {% endblock head %}
 
 {% block body %}
-<h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
   <div class="container-fluid">
     <div class="row">
       <div class="col">
@@ -23,14 +22,14 @@
             </ul>
           </div>
 
-          <ul>
+          <div class="chat-container">
             {% for msg in messages %}
-            <li>{{ msg.message }}</li>
+            <p>{{msg.user.username}}:{{ msg.message }} <span class="sentAt">{{msg.timestamp.strftime('%c')}}</span></p>
             {% endfor %}
-          </ul>
+            <div class="message_holder"></div>
+          </div>
         </div>
-        <div class="message_holder"></div>
-        
+        <div class="userType">
         {% if current_user.is_authenticated %}
         <form class= "chat">
           <input type="text" class="username" placeholder="User Name"/>
@@ -38,21 +37,49 @@
           <input type="submit"/>
         </form>
         {% endif %}
+        {% if current_user.is_anonymous%}
+        <div>
+          <span class="anonymousUser">Let's have you log in to start chatting away...</span>
+        </div>
+        {% endif %}
       </div>
-      <div class="col">
+
+      </div>
+      <!-- <div class="col"> -->
         <!-- <div class="popup" onclick="myFunction()">Click me!
           <span class="popuptext" id="myPopup">Popup text...</span>
         </div> -->
-        <div class= "popup" id="testPopup">
+        <!-- <div class= "popup" id="testPopup">
           <span class="popuptext" id="myPopup">Message</span>
           <section id = "plant-img">
-            <img src= "/static/images/plant{{num}}.png">
+            <img src= "/static/images/plant{{num}}.png"class="img-fluid" alt="Responsive image">
           </section>
-        </div>
-        <!-- <section id = "plant-img" onclick="popAQuote()" class="popup">
-          <span class="popuptext" id="plantMessage">I can talk....</span>
-          <img src= "/static/images/plant{{num}}.png"> -->
-
+        </div> -->
+        <div class="row">
+          <div class="col-md-4">
+            <div class="thumbnail">
+              <div class= "popup" id="testPopup">
+                <span class="popuptext" id="myPopup">Message</span>
+                <div id = "plant-img">
+                  <img src= "/static/images/plant{{num}}.png"class="img-fluid" alt="Responsive image">
+                </div></div>
+                <div class="">
+                  <div class="thumbnail">
+                      <img src="/static/images/plant2.png" class="img-fluid" alt="Responsive image">
+                  </div>
+                </div>
+                <div class="">
+                  <div class="thumbnail">
+                      <img src="/static/images/plant3.png" class="img-fluid" alt="Responsive image">
+                  </div>
+                </div>
+              <!-- <a href="/w3images/lights.jpg">
+                <img src="/w3images/lights.jpg" alt="Lights" style="width:100%">
+                <div class="caption">
+                  <p>Lorem ipsum...</p> -->
+                </div>
+            </div>
+          </div>
         </section>
       </div>
     </div>
@@ -63,7 +90,7 @@
   let counts = { 'positive': positive, 'negative':negative };
 </script>
 <script type="text/javascript" src="/static/chatty.js"></script>
-<script type="text/javascript" src="/static/plant.js"></script>
+<!-- <script type="text/javascript" src="/static/plant.js"></script> -->
 
 
 {% endblock %}
