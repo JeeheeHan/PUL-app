@@ -24,7 +24,6 @@ app.config['SESSION_PERMANENT'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
 
 
-
 app.jinja_env.undefined = StrictUndefined
 
 #Declaring loginmanager into a var and using it as a decorator to check if user is logged in
