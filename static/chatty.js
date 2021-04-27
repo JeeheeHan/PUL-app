@@ -10,10 +10,12 @@ let counts = { 'positive': Number($('#pos').text()), 'negative':Number($('#negat
     });
     
     polarity.done( (res)=>{
-      console.log(res.polarity)
+      $('#pClass').html(res.class);
+      $('#pPolar').html(res.polarity);
+      console.log(res.class)
       console.log("got a respsonse")
     });
-    console.log("TEstING")});
+ });
 
 
 $(window).on('load', ()=>{

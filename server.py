@@ -164,27 +164,27 @@ def change_password():
 
 @app.route('/getPolarity', methods=["POST"])
 def sentiment_form():
+    """From the AJAX request from chatt.js, return var answer as a dictionary with the results
+    """
     #add a if statment if the text is not empty
     #needed the post listed in method for AJAX request can come through
     form = WordsForm()
     quest = form.data.get('analysis')
     text = form.data.get('text')
     if form.validate_on_submit():
-        print('validated')
-        return jsonify(polarity=0)
+        print('Someone is trying the analyzer!')
+        result = crud.print_polarity_from_input(quest,text)
+        #if the chosen analysis is "PAT", result would comback as a float else would come out Sentiment class from Naive
+        if not isinstance(result, float):
+            # ex)Sentiment(classification='pos', p_pos=0.5702702702702702, p_neg=0.4297297297297299)
+            answer = crud.break_down_naive(result)
+            return jsonify(answer)
+        else:
+            answer = crud.print_pos_neg(result)
+            return jsonify({'class':answer, 'polarity':result})
 
-    # text=data.text.data
-    # polarity_dict = crud.print_polarity_from_input
     return jsonify(data=form.errors)
     #Forms input requriments would be sent out instead
-
-@app.route('/_add_numbers')
-def add_numbers():
-    a = request.args.get('a', 0, type=int)
-    b = request.args.get('b', 0, type=int)
-    return jsonify(result=a + b)
-
-
 
 
 @app.route('/logout')

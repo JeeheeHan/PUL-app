@@ -1,8 +1,12 @@
 """Create, read, update and delete"""
 
 from model import *
-from textblob import TextBlob
+from textblob import TextBlob, Blobber
+from textblob.sentiments import NaiveBayesAnalyzer
 from sqlalchemy import func
+
+#train NaiveBayesAnalyzer from Movie review lib to only have to train it once
+Naive_Analysis = Blobber(analyzer=NaiveBayesAnalyzer())
 
 def create_user(user, pwd):
     """Create and return a new user."""
@@ -153,11 +157,30 @@ def get_plant_status(num):
 
 def print_polarity_from_input(quest, text):
     """Get the user's selection of sentiment analysis and return the polarity"""
-    
-    pass
+    if quest == 'naive':
+        blob = Naive_Analysis(text).sentiment
+        return blob
+        #this will be: Sentiment(classification='pos', p_pos=0.5702702702702702, p_neg=0.4297297297297299)
+    else:
+        blob = TextBlob(text).sentiment
+        return blob.polarity
+
+def break_down_naive(result):
+    """return result into a dictionary"""
+    break_down = {}
+    if result.p_pos > result.p_neg:
+        break_down["class"] = "Positive"
+        break_down["polarity"] = "{:.2f}".format(result.p_pos)
+    elif result.p_pos < result.p_neg:
+        break_down["class"] = "Negative"
+        break_down["polarity"] = "{:.2f}".format(result.p_neg)
+    else:#if the text is neutral the pos and neg is 0.5 exactly
+        break_down["class"] = "Neutral"
+        break_down["polarity"] = "0.5"
+
+    return break_down
+
 if __name__ == '__main__':
     from server import app
     connect_to_db(app)
-
-
 
