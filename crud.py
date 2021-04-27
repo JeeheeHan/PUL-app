@@ -33,7 +33,8 @@ def login_check(username, password):
 def get_user_id(data):
     """Get the user_id from DB"""
     username = data['username']
-    user_id = User.query.filter_by(username=username).first().id
+    #return 404 if user is not found
+    user_id = User.query.filter_by(username=username).first_or_404().id
 
     return user_id
 
@@ -150,10 +151,13 @@ def get_plant_status(num):
     elif num < 1:
         return 4
 
-def print_polarity_from_input(data):
+def print_polarity_from_input(quest, text):
     """Get the user's selection of sentiment analysis and return the polarity"""
+    
     pass
-
 if __name__ == '__main__':
     from server import app
     connect_to_db(app)
+
+
+

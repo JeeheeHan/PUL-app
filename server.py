@@ -7,6 +7,7 @@ from flask_login import LoginManager,current_user,login_user,logout_user, login_
 from flask_session import Session
 import os
 from datetime import timedelta
+import json
 
 from model import *
 from forms import *
@@ -65,10 +66,12 @@ def diconnected():
 @socketio.on('messaging')
 def handle_message(data):
     #Data wil be {username = username, message = userMessage,timestamp = timestamp}
-    """Handle the messages coming in"""
+    """Handle the messages coming in, data will be in in json string then used json to make into dictionary"""
     print('new line', data)
+    data = json.loads(data)
     #Save the incoming messages into General_chat table
     if data['username']:
+        ##TO DO : add to check if the message is valid
         chatID = crud.save_chat_message(data)
         #returns the latest chat id 
         comp_or_neg = crud.save_nlp(data, chatID)
@@ -159,20 +162,27 @@ def change_password():
     
     return render_template("words.html", form = form)
 
-@app.route('/getPolarity', methods=["GET","POST"])
+@app.route('/getPolarity', methods=["POST"])
 def sentiment_form():
     #add a if statment if the text is not empty
+    #needed the post listed in method for AJAX request can come through
     form = WordsForm()
-    print(form.analysis.data)
+    quest = form.data.get('analysis')
+    text = form.data.get('text')
     if form.validate_on_submit():
-        print(form.text.data)
+        print('validated')
+        return jsonify(polarity=0)
 
     # text=data.text.data
     # polarity_dict = crud.print_polarity_from_input
     return jsonify(data=form.errors)
     #Forms input requriments would be sent out instead
 
-
+@app.route('/_add_numbers')
+def add_numbers():
+    a = request.args.get('a', 0, type=int)
+    b = request.args.get('b', 0, type=int)
+    return jsonify(result=a + b)
 
 
 

@@ -9,16 +9,16 @@ from wtforms.validators import DataRequired, InputRequired, Length, EqualTo, Val
 
 class LoginForm(FlaskForm):
     """Login form with validation from wtforms"""
-    username = StringField('username', validators=[InputRequired(message="Enter your Username")])
+    username = StringField(u'username', validators=[InputRequired(message="Enter your Username")])
     #import login_check from crud.py 
-    password = PasswordField('password', validators=[InputRequired(message="Enter your password")])
+    password = PasswordField(u'password', validators=[InputRequired(message="Enter your password")])
     submit = SubmitField("Login")
 
 class RegisterForm(FlaskForm):
     """Register form with the required elements!"""
-    username = StringField('username', validators=[InputRequired(message="Enter your Username"), Length(min=4, max=25, message="Username must be between 4 and 25 characters")])
-    password = PasswordField('password', validators=[InputRequired(message="Enter your Password"), Length(min=4, max=25, message="Password must be between 4 and 25 characters")])
-    confirm_pswd = PasswordField('confirm_pwd', validators=[InputRequired(message="Password required"), EqualTo('password', message="Passsword needs to match")])
+    username = StringField(u'username', validators=[InputRequired(message="Enter your Username"), Length(min=4, max=25, message="Username must be between 4 and 25 characters")])
+    password = PasswordField(u'password', validators=[InputRequired(message="Enter your Password"), Length(min=4, max=25, message="Password must be between 4 and 25 characters")])
+    confirm_pswd = PasswordField(u'confirm_pwd', validators=[InputRequired(message="Password required"), EqualTo('password', message="Passsword needs to match")])
     submit = SubmitField("Register")
     def validate_username(self, username):
         #WTF forms will automatically invoke these
@@ -29,13 +29,14 @@ class RegisterForm(FlaskForm):
 
 class UserprofileForm(FlaskForm):
     """Edit form to change username or password"""
-    username = StringField('username', validators=[DataRequired()])
-    password = PasswordField('password', validators=[DataRequired()])
-    new_password = PasswordField('new password', validators=[InputRequired(message="Enter a new desired Password"), Length(min=4, max=25, message="Password must be between 4 and 25 characters")])
-    confirm_new_pswd = PasswordField('confirm_new_pwd', validators=[InputRequired(message="Confirm new password"), EqualTo('new_password', message="Passsword needs to match")])
+    username = StringField(u'username', validators=[DataRequired()])
+    password = PasswordField(u'password', validators=[DataRequired()])
+    new_password = PasswordField('unew password', validators=[InputRequired(message="Enter a new desired Password"), Length(min=4, max=25, message="Password must be between 4 and 25 characters")])
+    confirm_new_pswd = PasswordField(u'confirm_new_pwd', validators=[InputRequired(message="Confirm new password"), EqualTo('new_password', message="Passsword needs to match")])
     submit = SubmitField("Update")
 
 class WordsForm(FlaskForm):
     """Form to get polarity of requested text"""
     analysis = SelectField(u'Opinion Mining', choices=[('pat', 'Pattern Library'), ('naive', 'NaiveBayers from Movie reviews')])
     text = TextAreaField(u'Text', validators=[Length(max=200)])
+    submit = SubmitField("run")

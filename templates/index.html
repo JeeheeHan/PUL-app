@@ -14,10 +14,10 @@
           <div class="counter">
             <ul>
               <li>
-                Positive:<span id = "pos">{{count["positive"]}}</span>
+                Positive:<span id = "pos">{{count["positive"]|tojson }}</span>
               </li>
               <li>
-                Negative:<span id = "negative">{{count["negative"]}}</span>
+                Negative:<span id = "negative">{{count["negative"]|tojson }}</span>
               </li>
             </ul>
           </div>
@@ -73,26 +73,23 @@
                       <img src="/static/images/plant3.png" class="img-fluid" alt="Responsive image">
                   </div>
                 </div>
-              <!-- <a href="/w3images/lights.jpg">
-                <img src="/w3images/lights.jpg" alt="Lights" style="width:100%">
-                <div class="caption">
-                  <p>Lorem ipsum...</p> -->
                 </div>
               <div>
                 <button type="button" class="btn btn-primary">Primary</button>
               </div>
               <div>
                 <p class="polarity">
-                  Polarity:
+                  Polarity:<span id="polar"></span>
                 </p>
-                <form action="" class="getPolar" >
+                <form action="/getPolarity" class="getPolar" >
                   <dl>
                     {{ form.csrf_token }}
                     {{ form.analysis.label }}:{{ with_errors(form.analysis) }}
                     {{ form.text.label }}:{{ with_errors(form.text) }}
+                    {{ form.submit(class="button is-sucess")}}
                   </dl>
-                  <button type="button" class="btn btn-primary" id="testbutton">Run</button>
                 </form>
+                  <button type="button" class="btn btn-primary" id="testbutton">Run</button>
                 </div>
               <div>
                 <p>
@@ -103,24 +100,7 @@
       </div>
     </div>
   </div>
-<script type="text/javascript">
-  let positive= {{count.positive}};
-  let negative= {{count.negative}};
-  let counts = { 'positive': positive, 'negative':negative };
 
-  $('#testbutton').on('click',(e)=>{
-  e.preventDefault();
-
-  const polarity = $.ajax({
-    url:'/getPolarity',
-    type:"POST",
-    data: $('form.getPolar').serialize()
-  });
-  polarity.done( ()=>{
-    console.log("got a respsonse")
-});
-});
-</script>
 <script type="text/javascript" src="/static/chatty.js"></script>
 <!-- <script type="text/javascript" src="/static/plant.js"></script> -->
 
