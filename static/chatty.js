@@ -1,4 +1,6 @@
-let counts = { 'positive': Number($('#pos').text()), 'negative':Number($('#negative').text()) };
+const { count } = require("node:console");
+
+let counts = { 'positive': Number($('#pos').text()), 'negative':Number($('#negative').text()), 'total':Number($('#total').text) };
 
   $('form.getPolar').on('submit',(e)=>{
     e.preventDefault();
@@ -37,6 +39,9 @@ $(window).on('load', ()=>{
   });
 
   const statusCounter = (pol) => {
+    //Counter of live messages and all the messages coming in per messages from async
+    counts.total++;
+
     if (pol == "positive") {
       counts.positive++;
       }
@@ -51,7 +56,7 @@ $(window).on('load', ()=>{
     let counts = statusCounter(data.polarity);
     $( '#pos').html( counts.positive);
     $( '#negative').html( counts.negative);
-    socket.emit('health', {positive : counts.positive.toString(), negative : counts.negative.toString()});
+    socket.emit('health', {positive : counts.positive.toString(), negative : counts.negative.toString(), total: counts.total.toString()});
   
     if( typeof data.username !== 'undefined' ) {
       $( 'div.message_holder' ).append( '<div><b style="color: #000">'+data.username+'</b> '+data.message+'</div>' )

@@ -1,3 +1,146 @@
+.homepage nav {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.nav-transparent {
+  background: linear-gradient(rgba(243, 243, 237, 0.4), transparent);
+  font-size: 1.2em;
+  z-index: 100;
+}
+
+.nav-transparent .nav-link,
+.nav-transparent .navbar-brand, 
+.nav-transparent p {
+  color: white;
+}
+
+.nav-transparent .navbar-brand {
+  font-weight: bold;
+}
+
+.nav-transparent .navbar-brand:hover,
+.nav-transparent .nav-link:hover {
+  color: #46513a;
+}
+
+/* select <section> elements with class "container-fluid"
+that have parent with a class "homepage" */
+.homepage > div.container-fluid,
+.homepage > div.container {
+  width: 100vw;
+  height: 100vh;
+  padding-top: 56px;
+}
+
+body {
+  background-color: #eae8e1;
+}
+
+/* Login Page CSS */
+#h1left {
+  color: #46513a;
+  font-family: 'Playfair Display', serif;
+  font-weight: 850;
+  font-style: italic;
+  font-size:73px;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 75px;
+  margin-right:25px;
+}
+#h1right{
+  color: #46513a;
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size:74px;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+#h2mid {
+  color: #46513a;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  text-align: center;
+  padding-bottom: 10px;
+  margin-left: auto;
+  margin-top: auto;
+}
+
+
+input[type="text"], input[type="password"] {
+  width: 350px;
+  padding: 10px 0px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #e7d1bc;
+  border-radius: 0;
+  outline: none;
+  color: #46513a;
+  font-size: 20px;
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: 300;
+  font-style: italic;
+  margin: 25px;
+}
+
+input[type="submit"] {
+  background: #46513a;
+  border: 0;
+  width: 350px;
+  height: 40px;
+  border-radius: 0px;
+  color: #fcfcfc;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 300;
+  padding:6px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+input[type="submit"]:hover {
+  background: #fff;
+  animation-name: shake;
+}
+
+
+.btn {
+  margin: 25px;
+  padding: 15px 30px;
+  border: 1px solid #fff;
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1;
+  color: #e7d1bc;
+  text-decoration: none;
+}
+
+.btn:hover {
+  color: #46513a;
+  background-color: #000;
+}
+.wrapper {
+  text-align : center;
+}
+.img-responsive {
+  width: 100%;
+  vertical-align: bottom;
+  margin-top: 160px;
+  margin-bottom: 0px;
+}
+
+/* POP UP CSS */
 .popup {
     position: relative;
     display: inline-block;
@@ -19,6 +162,19 @@
     left: 50%;
     margin-left: -80px;
   }
+  .div-wrapper {
+    position: relative;
+    height: 300px;
+    width: 300px;
+}
+
+.div-wrapper img {
+    /* position: absolute; */
+    /* left: 0; */
+    /* bottom: 0; */
+    width: 100%
+    
+}
   
   /* Popup arrow */
 .popup .popuptext::after {
@@ -61,15 +217,16 @@
   direction: ltr;
 }
 
-.container{
+/* .container{
   width: 400px;
   margin: 0 auto;
   border: solid 1px #ccc;
   border-radius: 5px;
   overflow: hidden;
-}
+} */
 
 .sentAt{
   color: red;
   display: none;
 }
+

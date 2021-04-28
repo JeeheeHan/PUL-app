@@ -102,28 +102,30 @@ def login_track(username):
     db.session.commit()
 
 
-def create_adjectives(word_type, word):
-    """Put each word in text file into adjectives table"""
-    adj = Adjectives(word_type= word_type,
-                        word = word)
-    db.session.add(adj)
-    db.session.commit()
+# def create_adjectives(word_type, word):
+#     """Put each word in text file into adjectives table"""
+#     adj = Adjectives(word_type= word_type,
+#                         word = word)
+#     db.session.add(adj)
+#     db.session.commit()
     
-    return adj
+#     return adj
 
-def get_words():
-    """This gets all the words"""
-    return Adjectives.query.all()
+# def get_words():
+#     """This gets all the words"""
+#     return Adjectives.query.all()
 
 def count_pos_neg():
     """Get a dictionary of positive to negative messages with count in nlp table"""
     pos_list= db.session.query(func.count(NLP.polarity)).filter(NLP.polarity>0).scalar()
     neg_list = db.session.query(func.count(NLP.polarity)).filter(NLP.polarity<0).scalar()
+    total_messages = db.session.query(func.count(NLP.polarity)).scalar()
 
     count_dict = {}
 
     count_dict['positive'] = pos_list
     count_dict['negative'] = neg_list
+    count_dict['total'] = total_messages
 
     return count_dict
 
@@ -131,18 +133,16 @@ def get_messages():
     """Get a list of messages by the chatID"""
     lst_messages = General_chat.query.order_by(General_chat.chatID.asc()).all()
     return lst_messages
-####Just going to use these functions to decide on the overall polarity for the latest 50 messages when a user connects#######
-def get_latest_messages():
-    """Get the last 50 messages from message table"""
-    list_inputs = General_chat.query.order_by(General_chat.chatID.desc()).limit(50).all()
-    return ' '.join(item.message for item in list_inputs)
-     #Get the last 50 messages and put it into one big string also make sure to seperate them out by spaces
 
-def get_sentiment():
-    """Get sentiment level from the last 50 messages"""
-    text = get_latest_messages()
-    status = TextBlob(text).sentiment.polarity
-    return status
+def get_ratio(count_dict):
+    """Get ratio for all messages between pos and neg"""
+    pos_ratio = float(count_dict['positive'])/ float(count_dict['total'])
+    neg_ratio = float(count_dict['negative']) / float(count_dict['total'])
+
+    count_dict['pRatio'] = pos_ratio
+    count_dict['nRatio'] = neg_ratio
+    return count_dict
+
     
 def get_plant_status(num):
     """"Return a number so that the appropriate image can be called"""
@@ -179,6 +179,33 @@ def break_down_naive(result):
         break_down["polarity"] = "0.5"
 
     return break_down
+
+def get_plant_health(count_dict):
+    """With the ratio, return a number for the plant's pic to be added into hmtl"""
+    #larger the num, the health level goes up/down
+    pos_ratio = count_dict['pRatio']
+    neg_ratio = count_dict['nRatio']
+    
+    if pos_ratio > neg_ratio:
+        if pos_ratio < 0.3:
+            num= 1
+        elif pos_ratio < 0.5:
+            num= 2
+        elif pos_ratio < 0.8:
+            num= 3
+        else:
+            num= 4
+        return f"/static/images/happyplant{num}.PNG"
+    else:
+        if neg_ratio < 0.3:
+            num= 1
+        elif neg_ratio < 0.5:
+            num= 2
+        elif neg_ratio < 0.8:
+            num= 3
+        else:
+            num= 4
+        return f"/static/images/sadplant{num}.PNG"
 
 if __name__ == '__main__':
     from server import app

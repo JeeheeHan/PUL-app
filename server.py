@@ -43,16 +43,12 @@ def load_user(user_id):
 @app.route('/')
 def homepage():
     count_dict = crud.count_pos_neg()
+    #count_dict = {pos: num, neg:num, total:num}
     messages = crud.get_messages()
-    num = crud.get_plant_status(crud.get_sentiment())
+    pic = crud.get_plant_health(crud.get_ratio(count_dict))
     form = WordsForm()
-    
-    return render_template("index.html", messages = messages, count = count_dict, num = num, form=form)
 
-#Flask-SocketIO also dispatches connection and disconnection events
-# @app.route('/chat')
-# def testsocket():
-#     return render_template("public.html")
+    return render_template("index.html", messages = messages, count = count_dict, pic = pic, form = form)
 
 @socketio.on('connect')
 def connected():
@@ -81,12 +77,12 @@ def handle_message(data):
 
 @socketio.on('health')
 def handle_plant_health(data):
-    diff = int(data['positive']) - int(data['negative'])
+    # data = {positive : counts.positive.toString(), negative : counts.negative.toString(), total: counts.total.toString()}
+    count_dict = crud.get_ratio(data)
 
-    if diff > 10:
-        emit('my_image', {'plant_pic': "plant_pic", 'pic': "/static/images/plant4.png"})
-    elif diff < -10:
-        emit('my_image', {'plant_pic': "plant_pic", 'pic': "/static/images/plant3.png"})
+    pic = crud.get_plant_health(count_dict)
+
+    emit('my_image', {'plant_pic': "plant_pic", 'pic': pic})
 
 
 def check_if_logged_in():
@@ -203,5 +199,4 @@ def all_words():
 
 if __name__ == '__main__':
     connect_to_db(app)
-    # app.run(port=5000, host='0.0.0.0', debug=True)
     socketio.run(app, host='0.0.0.0', debug=True)

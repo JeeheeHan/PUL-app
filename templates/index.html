@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>
-    PUL
-</title>
 {% endblock head %}
 
 {% block body %}
+<section class="demo-1 container-fluid d-flex justify-content-center align-items-center">
   <div class="container-fluid">
     <div class="row">
       <div class="col">
@@ -18,6 +16,9 @@
               </li>
               <li>
                 Negative:<span id = "negative">{{count["negative"]|tojson }}</span>
+              </li>
+              <li>
+                Total:<span id = "total">{{count["total"]|tojson }}</span>
               </li>
             </ul>
           </div>
@@ -45,34 +46,15 @@
       </div>
 
       </div>
-      <!-- <div class="col"> -->
-        <!-- <div class="popup" onclick="myFunction()">Click me!
-          <span class="popuptext" id="myPopup">Popup text...</span>
-        </div> -->
-        <!-- <div class= "popup" id="testPopup">
-          <span class="popuptext" id="myPopup">Message</span>
-          <section id = "plant-img">
-            <img src= "/static/images/plant{{num}}.png"class="img-fluid" alt="Responsive image">
-          </section>
-        </div> -->
         <div class="row">
           <div class="col-md-4">
             <div class="thumbnail">
               <div class= "popup" id="testPopup">
                 <span class="popuptext" id="myPopup">Message</span>
                 <div id = "plant-img">
-                  <img src= "/static/images/plant{{num}}.png"class="img-fluid" alt="Responsive image">
+                  <img src= {{pic}} class="img" id="left" alt="Responsive image">
                 </div></div>
-                <div class="">
-                  <div class="thumbnail">
-                      <img src="/static/images/plant2.png" class="img-fluid" alt="Responsive image">
-                  </div>
-                </div>
-                <div class="">
-                  <div class="thumbnail">
-                      <img src="/static/images/plant3.png" class="img-fluid" alt="Responsive image">
-                  </div>
-                </div>
+
                 </div>
               <div>
                 <button type="button" class="btn btn-primary">Primary</button>
@@ -92,17 +74,13 @@
                   <button type="button" class="btn btn-primary" id="testbutton">Run</button>
                 </div>
               <div>
-                <p>
-                    edit <a href="/edit_profile"> Here</a>
-                </p>
             </div>
           </div>
       </div>
     </div>
   </div>
-
+</section>
 <script type="text/javascript" src="/static/chatty.js"></script>
-<!-- <script type="text/javascript" src="/static/plant.js"></script> -->
 
 
 {% endblock %}

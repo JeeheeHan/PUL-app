@@ -9,15 +9,14 @@ from wtforms.validators import DataRequired, InputRequired, Length, EqualTo, Val
 
 class LoginForm(FlaskForm):
     """Login form with validation from wtforms"""
-    username = StringField(u'username', validators=[InputRequired(message="Enter your Username")])
-    #import login_check from crud.py 
-    password = PasswordField(u'password', validators=[InputRequired(message="Enter your password")])
+    username = StringField(u'username', validators=[InputRequired(message="Enter your Username")], render_kw={"placeholder": "Your Username"})
+    password = PasswordField(u'password', validators=[InputRequired(message="Enter your password")],render_kw={"placeholder": "Your Password","type":"password"})
     submit = SubmitField("Login")
 
 class RegisterForm(FlaskForm):
     """Register form with the required elements!"""
-    username = StringField(u'username', validators=[InputRequired(message="Enter your Username"), Length(min=4, max=25, message="Username must be between 4 and 25 characters")])
-    password = PasswordField(u'password', validators=[InputRequired(message="Enter your Password"), Length(min=4, max=25, message="Password must be between 4 and 25 characters")])
+    username = StringField(u'username', validators=[InputRequired(message="Enter your Username"), Length(min=4, max=25, message="Username must be between 4 and 25 characters")], render_kw={"placeholder": "Your Username","type":"password"})
+    password = PasswordField(u'password', validators=[InputRequired(message="Enter your Password"), Length(min=4, max=25, message="Password must be between 4 and 25 characters")],render_kw={"placeholder": "Your Password","type":"password"})
     confirm_pswd = PasswordField(u'confirm_pwd', validators=[InputRequired(message="Password required"), EqualTo('password', message="Passsword needs to match")])
     submit = SubmitField("Register")
     def validate_username(self, username):
@@ -31,7 +30,7 @@ class UserprofileForm(FlaskForm):
     """Edit form to change username or password"""
     username = StringField(u'username', validators=[DataRequired()])
     password = PasswordField(u'password', validators=[DataRequired()])
-    new_password = PasswordField('unew password', validators=[InputRequired(message="Enter a new desired Password"), Length(min=4, max=25, message="Password must be between 4 and 25 characters")])
+    new_password = PasswordField(u'new password', validators=[InputRequired(message="Enter a new desired Password"), Length(min=4, max=25, message="Password must be between 4 and 25 characters")])
     confirm_new_pswd = PasswordField(u'confirm_new_pwd', validators=[InputRequired(message="Confirm new password"), EqualTo('new_password', message="Passsword needs to match")])
     submit = SubmitField("Update")
 

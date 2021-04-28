@@ -2,33 +2,57 @@
 
 {% block head %}{% endblock %}
 {% block body %}
-
-  <div id="loginbox"></div>
-  <h2>Login here</h2>
-  <p>Enter you username/password to start chatting</p>
-
-  <form method="POST" action="/login">
-    {{ form.csrf_token }}
-    <div>{{ form.username.label }}: {{ form.username(class="css_class") }}</div>
-    {% if form.username.errors %}
-        <ul class="errors">{% for error in form.username.errors %}<li>{{ error }}</li>{% endfor %}</ul>
-    {% endif %}
-
-    <div>{{ form.password.label }}: {{ form.password() }}</div>
-    {% if form.password.errors %}
-        <ul class="errors">{% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
-    {% endif %}
-    <p>{{ form.submit(class="button is-sucess")}}</p>
-  </p>
+<div class="container">
+<div class="row content">
+  <div class="col">
+    <!-- <div class="div-wrapper"> -->
+      <img class="img-responsive" src="/static/images/lady1.PNG"/>
+    <!-- </div> -->
+    </div>
+  <div class="col">
+    <h1 id="h1right">Welcome</h1>
+    <!-- <div class="col-md-4 col-md-offset-3"> -->
+      <h2 id="h2mid">Login in to start chatting or click here to <a href="/register"> register</a></h2>
+      <form method="POST" action="/login">
+        {{ form.csrf_token }}
+        {{ form.username(class="form-control") }}
+        {% if form.username.errors %}
+        {% for error in form.username.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        {% endif %}
+        {{ form.password(class="form-control") }}
+        {% if form.password.errors %}
+        {% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        {% endif %}
+        {{ form.submit(class="btn")}}
+      </form>
+      <!-- </div> -->
   </div>
-</form>
 
-  <div>
-    <p>
-        Don't an account already? <a href="/register"> Here</a>
-    </p>
+  <div class="col">
+    <!-- <div class="div-wrapper"> -->
+      <img class="img-responsive" src="/static/images/lady2.PNG"/>
+    <!-- </div> -->
+    </div>
+
+ </div>
 </div>
 
+<!-- <div class="container">
+  <div class="col-md-4 col-sm-6">
+    <div class="div-wrapper">
+      <img src="/static/images/lady1.PNG"/>
+    </div>
+  </div>
+ </div> -->
 
+
+<!-- <div class="container">
+  <div class="col-md-4 col-sm-6">
+    <div class="div-wrapper">
+      <img src="/static/images/lady2.PNG"/>
+    </div>
+  </div>
+ </div> -->
+</div>
 
 {% endblock %}
