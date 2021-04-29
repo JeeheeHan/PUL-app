@@ -133,12 +133,44 @@ input[type="submit"]:hover {
 .wrapper {
   text-align : center;
 }
-.img-responsive {
-  width: 100%;
-  vertical-align: bottom;
-  margin-top: 160px;
-  margin-bottom: 0px;
+.img-fluid.right {
+  padding-top: 140px;
+  padding-right: 85px;
+  padding-bottom: 40px;
+  /* max-width: 38%; */
+  height: auto;
+  position: inherit;
+
 }
+.img-fluid.left {
+  padding-top: 140px;
+  padding-right: -1px;
+  padding-left: 92px;
+  padding-bottom: 40px;
+  /* max-width: 38%; */
+  height: auto;
+  position: relative;
+
+}
+/* @media only screen and (max-width: 300px){
+  .img-fluid.left {
+    top: 235px;
+    position:sticky;
+    height: 280px;
+    bottom: 0;
+    left: 210px;
+    min-width: 75%;}
+
+  .img-fluid.right {
+    height: 283px;
+    position: sticky;
+    top: 235px;
+    padding-left: 43px;
+    min-width: 75%;
+  }
+  
+
+} */
 
 /* POP UP CSS */
 .popup {
@@ -162,19 +194,6 @@ input[type="submit"]:hover {
     left: 50%;
     margin-left: -80px;
   }
-  .div-wrapper {
-    position: relative;
-    height: 300px;
-    width: 300px;
-}
-
-.div-wrapper img {
-    /* position: absolute; */
-    /* left: 0; */
-    /* bottom: 0; */
-    width: 100%
-    
-}
   
   /* Popup arrow */
 .popup .popuptext::after {
