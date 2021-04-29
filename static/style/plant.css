@@ -44,26 +44,26 @@ body {
 }
 
 /* Login Page CSS */
-#h1left {
+/* #h1left {
   color: #46513a;
-  font-family: 'Playfair Display', serif;
-  font-weight: 850;
+  font-family: 'Sansita Swashed', cursive;
+  font-weight: 800;
   font-style: italic;
-  font-size:73px;
+  font-size:67px;
   text-align: center;
-  padding-top: 40px;
-  padding-bottom: 75px;
-  margin-right:25px;
-}
+  /* padding-top: 40px;
+  padding-bottom: 75px; */
+  /* margin-right:20px;
+} */ 
 #h1right{
   color: #46513a;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Sansita Swashed', cursive;
   font-weight: 900;
   font-style: italic;
   font-size:74px;
   text-align: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 #h2mid {
   color: #46513a;
@@ -73,6 +73,7 @@ body {
   padding-bottom: 10px;
   margin-left: auto;
   margin-top: auto;
+  font-size: 31px;
 }
 
 
@@ -90,7 +91,7 @@ input[type="text"], input[type="password"] {
   font-family: 'Playfair Display', serif;
   font-weight: 300;
   font-style: italic;
-  margin: 25px;
+  margin: 14px;
 }
 
 input[type="submit"] {
