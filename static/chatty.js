@@ -58,7 +58,8 @@ $(window).on('load', ()=>{
   
     if( typeof data.username !== 'undefined' ) {
       $( 'div.message_holder' ).append( '<div><b style="color: #000">'+data.username+'</b> '+data.message+'</div>' )
-    };
+      $('div.message_holder').scrollTop($('div.message_holder')[0].scrollHeight);
+      };
   });
 
   socket.on('my_image', ( data ) =>{

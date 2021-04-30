@@ -23,11 +23,11 @@
             </ul>
           </div>
 
-          <div class="chat-container">
+          <div class="message_holder">
             {% for msg in messages %}
             <p>{{msg.user.username}}:{{ msg.message }} <span class="sentAt">{{msg.timestamp.strftime('%c')}}</span></p>
             {% endfor %}
-            <div class="message_holder"></div>
+            <!-- <div class="message_holder"></div> -->
           </div>
         </div>
         <div class="userType">

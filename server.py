@@ -20,8 +20,8 @@ app = Flask(__name__)
 app.secret_key = os.environ['SECRET_KEY']
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_PERMANENT'] = True
-#default session time is 31 days for flask so setting it to 5 mins 
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
+#default session time is 31 days for flask so setting it to 30 mins 
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 
 
 app.jinja_env.undefined = StrictUndefined
@@ -42,6 +42,7 @@ def load_user(user_id):
 
 @app.route('/')
 def homepage():
+    """ TO DO """
     count_dict = crud.count_pos_neg()
     #count_dict = {pos: num, neg:num, total:num}
     messages = crud.get_messages()
@@ -60,6 +61,7 @@ def diconnected():
 
 @socketio.on('messaging')
 def handle_message(data):
+    """ ADD HERE"""
     #Data wil be {username = username, message = userMessage,timestamp = timestamp}
     """Handle the messages coming in, data will be in in json string then used json to make into dictionary"""
     print('new line', data)
@@ -139,7 +141,7 @@ def register_user():
 @app.route('/edit_profile', methods=["GET", "POST"])
 @login_required
 def change_password():
-    """Change Password"""
+    """Change Password:TO DO ADD DETAILS """
     form = UserprofileForm()
     if form.validate_on_submit():
         username = current_user.username

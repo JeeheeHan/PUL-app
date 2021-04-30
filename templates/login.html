@@ -1,36 +1,31 @@
 {% extends 'base.html' %}
 
 {% block head %}{% endblock %}
+
 {% block body %}
 <div class="loginpage">
-<div class="container-fluid">
-<div class="row content">
-  <div class="col order-last order-md-first order-lg-first">
-      <img class="img-fluid left" src="/static/images/lady1.PNG" alt="Plant Lover 1"/>
+  <div class="container-fluid">
+    <div class="row content">
+      <div class="col order-last order-md-first order-lg-first">
+        <img class="img-fluid left" src="/static/images/lady1.PNG" alt="Plant Lover 1" />
+      </div>
+      <div class="col order-sm-first" style="padding: 26px; margin-top: 14px;">
+        <h1 id="h1right"> Members Area</h1>
+        <h2 id="h2mid">Welcome back.<br>Login in to start chatting again</h2>
+        <form method="POST" action="/login" class="loginform">
+          {{ form.csrf_token }}
+          {{ with_errors(form.username) }}
+          {{ with_errors(form.password) }}
+          {{ form.submit(class="btn") }}
+        </form>
+        <p class="resRoute">Don't have an account? <a class="resRoute" href="/register">Create one here</a></p>
+      </div>
+
+      <div class="col-md-4">
+        <img class="img-fluid right" src="/static/images/lady2.PNG" alt="Plant Lover 2" />
+      </div>
+
     </div>
-  <div class="col order-sm-first">
-    <h1 id="h1right">Members Area</h1>
-      <h2 id="h2mid">Welcome back.<br>Login in to start chatting again</h2>
-      <form method="POST" action="/login">
-        {{ form.csrf_token }}
-        {{ form.username(class="form-control") }}
-        {% if form.username.errors %}
-        {% for error in form.username.errors %}<li>{{ error }}</li>{% endfor %}</ul>
-        {% endif %}
-        {{ form.password(class="form-control") }}
-        {% if form.password.errors %}
-        {% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
-        {% endif %}
-        {{ form.submit(class="btn")}}
-      </form>
-      <!-- <a class="links" href="/register"> register</a> -->
   </div>
-
-  <div class="col-md-4">
-      <img class="img-fluid right" src="/static/images/lady2.PNG" alt="Plant Lover 2"/>
-    </div>
-
- </div>
-</div>
 </div>
 {% endblock %}

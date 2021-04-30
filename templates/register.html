@@ -4,27 +4,35 @@
 
 
 {% block body %}
-<!-- //Jinja macro to rendering errors for the form field -->
-<div class="form_field">
-  <div id="loginbox"></div>
-  <h2>Register</h2>
-  <p>Enter you username/password to create your own account</p>
-
-  <form action= "/register" method="POST">
-    <dl>
-      {{ form.csrf_token }}
-      {{ with_errors(form.username) }}
-      {{ with_errors(form.password) }}
-      {{ with_errors(form.confirm_pswd) }}
-    </dl>
-    <p>
-      {{ form.submit(class="button is-sucess")}}</p>
-  </form>
-
-  <div>
-      <p>
-          Login here <a href="/login">by clicking</a>
-      </p>
+<div class="registerpage">
+  <div class="container-fluid">
+    <div class="row content">
+      <div class="col order-last order-md-first order-lg-first"style="
+      margin-left: 59px;">
+        <br>
+        <img class="img-fluid pears" src="/static/images/005.png" alt="Plant Lover 3" />
+      </div>
+      <div class="col order-sm-first"style="margin-right: 21px;">
+        <div class="container-fluid reg">
+          <br>
+        <h1 id="h1right">Register Here</h1>
+        <h2 id="h2mid">Create your own account <br>to start chatting with <br>the rest of the world</h2>
+        <form action="/register" method="POST" class="regForm">
+          {{ form.csrf_token }}
+          {{ with_errors(form.username) }}
+          {{ with_errors(form.password) }}
+          {{ with_errors(form.confirm_pswd) }}
+          <br>
+          {{ form.submit}}
+        </form>
+        <br>
+        <p class="resRoute">Already have an account?<a href="/login">Login In Here</a></p>
+      </div>
+      </div>
+      <div class="col-2"> 
+      </div>
+    </div>
   </div>
-
+</div>
+</div>
 {% endblock %}
