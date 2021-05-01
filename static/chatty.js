@@ -57,8 +57,8 @@ $(window).on('load', ()=>{
     socket.emit('health', {positive : counts.positive.toString(), negative : counts.negative.toString(), total: counts.total.toString()});
   
     if( typeof data.username !== 'undefined' ) {
-      $( 'div.message_holder' ).append( '<div><b style="color: #000">'+data.username+'</b> '+data.message+'</div>' )
-      $('div.message_holder').scrollTop($('div.message_holder')[0].scrollHeight);
+      $( '.message_holder' ).append( '<div class="mesContainer"><b style="color: #000">'+data.username+': </b>'+data.message+'<span class="timestamp">'+data.timestamp+'</span></div>')
+      $('.message_holder').scrollTop($('.message_holder')[0].scrollHeight);
       };
   });
 

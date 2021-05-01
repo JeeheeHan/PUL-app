@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>
+    Words list
+</title>
+{% endblock head %}
+
+{% block body %}
+<div class="profilepage">
+  <div class="container">
+  <section class="h-100 mx-3 full-columns">
+    <div class="row h-100">
+      <aside class="col-4 h-100 bg-light d-flex justify-content-center">
+        <div class="container my-4">
+          <div class="lead">
+            <img class="img-fluid center" src="/static/images/002.png" alt="Plant Lady 4"/>
+          </div>
+            <h1 id="h1right">{{ current_user.username }}'s Page</h1>
+        </div>
+      </aside>
+      <main class="col h-100 overflow-y">
+        <div class="container py-4 content">
+          <div class="row content" style="align-items: flex-end">
+            <div class="col-8" style="text-align: center;">
+              <p id="phmid">
+                Change password
+                <form action="" method="POST">
+                  <dl>
+                      {{ form.csrf_token }}
+                      {{ with_errors(form.username) }}
+                      {{ with_errors(form.password) }}
+                      {{ with_errors(form.new_password) }}
+                      {{ with_errors(form.confirm_new_pswd) }}
+                    </dl>
+                    <p>
+                      {{ form.submit(class="btn") }}</p>
+              </form>
+              </p>
+
+            </div>
+            <div class="col content">
+              <p class="pmid">
+                Stay tuned for more personalization features
+              </p>
+              <p>
+                <img class="img-fluid" src="/static/images/plantpink.png" alt="Pink Plant"/>
+              </p>
+
+            </div>
+
+
+
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </section>
+
+<!-- 
+    <div class="row h-100">
+      <div class="col-4 h-100 bg-light d-flex justify-content-center">
+        <img class="img-fluid right" src="/static/images/002.png" alt="Plant Lady 4"/>
+      </div>
+      <div class="col">
+        <h1 id="h1right">User: {{ current_user.username }}</h1>
+        <form action="" method="POST">
+          <dl>
+              {{ form.csrf_token }}
+              {{ with_errors(form.username) }}
+              {{ with_errors(form.password) }}
+              {{ with_errors(form.new_password) }}
+              {{ with_errors(form.confirm_new_pswd) }}
+            </dl>
+            <p>
+              {{ form.submit(class="btn") }}</p>
+      </form>
+      </div>
+      <div class="col">
+        <img class="img-fluid right" src="/static/images/002.png" alt="Plant Lady 4"/>
+      </div>
+    </div> -->
+
+
+</div>
+</div>
+{% endblock %}

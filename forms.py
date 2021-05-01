@@ -28,10 +28,10 @@ class RegisterForm(FlaskForm):
 
 class UserprofileForm(FlaskForm):
     """Edit form to change username or password"""
-    username = StringField(u'username', validators=[DataRequired()])
-    password = PasswordField(u'password', validators=[DataRequired()],render_kw={"placeholder": "Current Password","type":"password"} )
-    new_password = PasswordField(u'new password', validators=[InputRequired(message="Enter a new desired Password"), Length(min=4, max=25, message="Password must be between 4 and 25 characters")], render_kw={"placeholder": "New Password","type":"password"})
-    confirm_new_pswd = PasswordField(u'confirm_new_pwd', validators=[InputRequired(message="Confirm new password"), EqualTo('new_password', message="Passsword needs to match")],render_kw={"placeholder": "Confirm New Password","type":"password"})
+    username = StringField(u'username', validators=[DataRequired()], render_kw={"type":"hidden"})
+    password = PasswordField(u'password', validators=[DataRequired()],render_kw={"placeholder": "Current Password","type":"password","class":"login"} )
+    new_password = PasswordField(u'new password', validators=[InputRequired(message="Enter a new desired Password"), Length(min=4, max=25, message="Password must be between 4 and 25 characters")], render_kw={"placeholder": "New Password","type":"password","class":"login"})
+    confirm_new_pswd = PasswordField(u'confirm_new_pwd', validators=[InputRequired(message="Confirm new password"), EqualTo('new_password', message="Passsword needs to match")],render_kw={"placeholder": "Confirm New Password","type":"password","class":"login"})
     submit = SubmitField("Update")
 
 class WordsForm(FlaskForm):

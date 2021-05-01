@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Krub:wght@200;700&display=swap" rel="stylesheet">
-  <title>Plants Utilize Language
+<title>Plants Utilize Language
     {% block title %}{% endblock %}
   </title>
   <link rel="icon" href="/static/images/icon.png" type="image/icon type">
@@ -32,12 +32,13 @@
     <nav class="navbar navbar-expand-md nav-transparent w-100">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">Plants Utilize Language</a>
-        <div id="navbar" class="navbar-collapse collapse navbar-expand-lg">
+        <div id="navbar" class="navbar-collapse collapse navbar-expand-lg"style="
+        justify-content: flex-end;">
           <ul class="navbar-nav">
             <li class="nav-item">
               <a href="#" class="nav-link">About</a>
             </li>
-            {% if not current_user.is_authenticated %}
+              {% if not current_user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="/login">Log In</a>
             </li>

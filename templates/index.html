@@ -4,72 +4,71 @@
 {% endblock head %}
 
 {% block body %}
-<section class="demo-1 container-fluid d-flex justify-content-center align-items-center">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col">
-        <div>
-          <div class="counter">
-            <ul>
-              <li>
-                Positive:<span id = "pos">{{count["positive"]|tojson }}</span>
-              </li>
-              <li>
-                Negative:<span id = "negative">{{count["negative"]|tojson }}</span>
-              </li>
-              <li>
-                Total:<span id = "total">{{count["total"]|tojson }}</span>
-              </li>
-            </ul>
+<div class="indexpage">
+  <div class="container">
+    <div class="row content">
+      <div class="col" id="chatbox">
+        <h1 class="livechat">Live Chat</h1>
+        <div class="row" style="width: 450px;background-color: #fffafa;/* left: 100%; */margin: 10px 0px 0px 0px;">
+          <div class="col">
+            <p id="counts">Positives<br><span id="pos">{{count["positive"]|tojson }}</span></p>
           </div>
-
-          <div class="message_holder">
-            {% for msg in messages %}
-            <p>{{msg.user.username}}:{{ msg.message }} <span class="sentAt">{{msg.timestamp.strftime('%c')}}</span></p>
-            {% endfor %}
-            <!-- <div class="message_holder"></div> -->
+          <div class="col">
+            <p id="counts">Negatives<br><span id="negative">{{count["negative"]|tojson }}</span></p>
+          </div>
+          <div class="col">
+            <p id="counts">All Messages<br><span id="total">{{count["total"]|tojson }}</span>
           </div>
         </div>
-        <div class="userType">
+        <section class="message_holder">
+          {% for msg in messages %}
+          <div class="mesContainer"><b style="color: #000">{{msg.user.username}}: </b>{{ msg.message }}
+            <span class="timestamp">{{msg.timestamp.strftime('%c')}}</span>
+          </div>
+          {% endfor %}
+        </section>
         {% if current_user.is_authenticated %}
-        <form class= "chat">
-          <input type="text" class="username" placeholder="User Name"/>
-          <input type="text" class="message" placeholder="Messages"/>
-          <input type="submit"/>
-        </form>
+        <section class="submitMessage">
+          <!-- <div class="username-box">{{current_user.username}}</div> -->
+          <form class="chat">
+            <input type="hidden" class="username" value="{{current_user.username}}" />
+            <input type="text" class="message" placeholder="Messages" />
+            <input type="submit" class="btn" value="Send">
+          </form>
+        </section>
         {% endif %}
         {% if current_user.is_anonymous%}
-        <div>
-          <span class="anonymousUser">Let's have you log in to start chatting away...</span>
-        </div>
+        <section>
+          <div class="anonymousUser">Let's have you log in to start chatting away...</div>
+        </section>
         {% endif %}
       </div>
 
-      </div>
-          <div class="col-md-4">
-            <div class="thumbnail">
-              <div class= "popup" id="testPopup">
+      <div class="col" id="thePlant">
+        <!-- <img src="/static/images/000.png" style="z-index: -1;position: absolute;right: 17%;bottom: 18%;opacity: 0.5;"> -->
+        <img src="/static/images/0000.png" style="position: absolute;z-index: -2;opacity: 0.5;left: 45%;bottom: 20%;">
+        <img src="/static/images/000.png" style="position: absolute;z-index: -3;opacity: .5;bottom: 20%;right: 3%;">
+        <img src="/static/images/baseboard.PNG" style="position: absolute;z-index: -4;left: 46%;bottom: -12%;">
+        <div class="row">
+          <div class="col">
+            <div class="popup" id="testPopup">
+              <div id="plant-img" style="object-position: bottom">
                 <span class="popuptext" id="myPopup">Message</span>
-                <div id = "plant-img">
-                  <img src= {{pic}} class="img" id="left" alt="Responsive image">
-                </div></div>
+                <img src={{pic}} class="img-fluid" alt="Responsive image">
               </div>
             </div>
-                </div>
-              <div class ="row">
-                <p class="polarity">
-                  Polarity:<span id="pClass"></span><span id="pPolar"></span>
-                </p>
-                <form action="/getPolarity" class="getPolar" >
-                  <dl>
-                    {{ form.csrf_token }}
-                    {{ form.analysis.label }}:{{ with_errors(form.analysis) }}
-                    {{ form.text.label }}:{{ with_errors(form.text) }}
-                    {{ form.submit(class="button is-sucess")}}
-                  </dl>
-                </form>
-                </div>
+
+          </div>
+
+        </div>
+
       </div>
+
+    </div>
+  </div>
+</div>
+
+
 
 </section>
 <script type="text/javascript" src="/static/chatty.js"></script>

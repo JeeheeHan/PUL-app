@@ -6,11 +6,14 @@
     justify-content: space-between;
     padding-top: .5rem;
     padding-bottom: .5rem;
-    font-family: 'Sansita Swashed', cursive;
+    padding-left: 0.5rem;;
+    font-family: 'Krub', sans-serif, bold;
+    
 }
 
 .nav-transparent {
-  background: linear-gradient(rgba(243, 243, 237, 0.4), transparent);
+  background: white;
+  opacity:0.95;
   font-size: 1.3em;
   z-index: 100;
 }
@@ -18,7 +21,8 @@
 .nav-transparent .nav-link,
 .nav-transparent .navbar-brand, 
 .nav-transparent p {
-  color: white;
+  color: #282828;
+  /* color: white; */
 }
 
 .nav-transparent .navbar-brand {
@@ -27,7 +31,8 @@
 
 .nav-transparent .navbar-brand:hover,
 .nav-transparent .nav-link:hover {
-  color: #46513a;
+  color:#e7d1bc;
+  /* color: #46513a; */
 }
 
 /* select <section> elements with class "container-fluid"
@@ -41,20 +46,20 @@ that have parent with a class "homepage" */
 
 body {
   background-color: #eae8e1;
+  font-family: 'Krub', sans-serif;
+}
+
+.indexpage > div.container-fluid,
+.indexpage > div.container {
+  /* width: 100vw;
+  height: 250vh; */
+  padding-top: 16px;
+  padding-left: 69px;
+  width: 100vw;
 }
 
 /* Login Page CSS */
-/* #h1left {
-  color: #46513a;
-  font-family: 'Sansita Swashed', cursive;
-  font-weight: 800;
-  font-style: italic;
-  font-size:67px;
-  text-align: center;
-  /* padding-top: 40px;
-  padding-bottom: 75px; */
-  /* margin-right:20px;
-} */ 
+
 #h1right{
   color: #4e5a41;
   font-family: 'Krub', sans-serif, bold;
@@ -74,6 +79,27 @@ body {
   margin-left: auto;
   margin-top: auto;
   font-size: 32px;
+}
+
+#phmid{
+  color: #95998c;
+  font-family: 'Krub', sans-serif;
+  font-style: italic;
+  text-align: center;
+  padding-bottom: 10px;
+  /* margin-left: auto; */
+  margin-top: auto;
+  font-size: 32px;
+}
+.pmid{
+  color: #95998c;
+  font-family: 'Krub', sans-serif;
+  font-style: italic;
+  text-align: center;
+  padding-bottom: 10px;
+  margin-left: auto;
+  margin-top: auto;
+  font-size: 22px;
 }
 
 .loginform{
@@ -115,7 +141,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-  background: #fff;
+  background: #e7d1bc;
   animation-name: shake;
 }
 
@@ -141,7 +167,6 @@ input[type="submit"]:hover {
   padding-top: 140px;
   padding-right: 85px;
   padding-bottom: 40px;
-  /* max-width: 38%; */
   height: auto;
   position: inherit;
 
@@ -169,7 +194,7 @@ input[type="submit"]:hover {
 
 /* Register page */
 .img-fluid.pears{
-  height: auto;
+  height: 87%;
 }
 
 .container-fluid.reg{
@@ -178,13 +203,23 @@ input[type="submit"]:hover {
   right: 62px;
 }
 
+/* Edit profile margin set up */
+.py-4 {
+  padding-top: 2.5rem!important;
+  padding-bottom: 1.5rem!important;
+}
+.container-fluid.reg > #h2mid{
+  font-size: 27px;
+}
+
+
 /* POP UP CSS */
 .popup {
     position: relative;
     display: inline-block;
     cursor: pointer;
   }
-  
+
   /* The actual popup (appears on top) */
 .popup .popuptext {
     visibility: hidden;
@@ -196,7 +231,7 @@ input[type="submit"]:hover {
     padding: 8px 0;
     position: absolute;
     z-index: 1;
-    bottom: 125%;
+    /* bottom: 125%; */
     left: 50%;
     margin-left: -80px;
   }
@@ -236,43 +271,83 @@ input[type="submit"]:hover {
     color:red;
 }
 .message_holder{
-  height: 400px;
-  overflow: scroll;
-  /* transform: rotate(); */
+  height: 350px;
+  overflow-y: scroll;
   direction: ltr;
+  background:rgba(255, 255, 255, 0.5);
+  /* position: relative; */
+  width: 450px;
+  left: 95px;
 }
 
-/* .container{
-  width: 400px;
-  margin: 0 auto;
-  border: solid 1px #ccc;
+.message_holder::-webkit-scrollbar{
+  width: 12px;
+}
+
+.message_holder::-webkit-track{
+  background: transparent;
+}
+.message_holder::-webkit-scrollbar-thumb{
+background-color: white;
+}
+
+.mesContainer{
+  border: 2px solid #eae8e1;
+  background-color: #fffafa;
   border-radius: 5px;
-  overflow: hidden;
-} */
-
-.sentAt{
-  color: red;
-  display: none;
+  padding: 10px;
+  margin: 12px 12px;
+}
+/* Style time text */
+.timestamp {
+  float: right;
+  color: #aaa;
+  font-size: 10px;
 }
 
-/* Line Wip for Nav BAR */
-.line-wipe {
-  position: relative;
-  text-decoration: none !important;
-  display: inline-block;
+/* livechat header */
+.livechat{
+  border: 2px solid #eae8e1;
+  background-color: #fffafa;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0px 2px 0px;
+  text-align: center;
+  width: 451px;
+  color: #4e5a41;
+  font-family: 'Krub', sans-serif, bold;
+  font-weight: 900;
+  font-style: italic;
+  border-radius: 0.5rem;
 }
 
-.line-wipe:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  width: 0;
-  height: 100%;
-  border-bottom: 2px solid rgb(55, 170, 243);
-  transition: 0.5s width;
+#counts{
+  padding: 1px;
+  margin: 0px 0px 2px 0px;
+  text-align: center;
+  color: #4e5a41;
+  font-weight: 600;
+  font-family: 'Krub', sans-serif, bold;
+  left: 95px;
 }
 
-.line-wipe:hover:after {
-  width: 100%;
-  border-bottom-color: rgb(0, 86, 179);
+.chat > input[class='message']{
+  display: block;
+  width: 375px;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #fffafa;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  float:left;
+}
+
+.chat>input[class="btn"]{
+  float:left;
+  width: 75px;
+  margin:0px;
 }

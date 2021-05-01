@@ -157,7 +157,7 @@ def change_password():
         #Return back the username into the form 
         form.username.data = current_user.username
     
-    return render_template("words.html", form = form)
+    return render_template("profile.html", form = form)
 
 @app.route('/getPolarity', methods=["POST"])
 def sentiment_form():
