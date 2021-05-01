@@ -135,12 +135,17 @@ def get_messages():
     return lst_messages
 
 def get_ratio(count_dict):
-    """Get ratio for all messages between pos and neg"""
-    pos_ratio = float(count_dict['positive'])/ float(count_dict['total'])
-    neg_ratio = float(count_dict['negative']) / float(count_dict['total'])
+    """check if count_dict has total then Get ratio for all messages between pos and neg"""
+    if count_dict['total'] != 0:
+        pos_ratio = float(count_dict['positive'])/ float(count_dict.get('total',1))
+        neg_ratio = float(count_dict['negative']) / float(count_dict.get('total',1))
 
-    count_dict['pRatio'] = pos_ratio
-    count_dict['nRatio'] = neg_ratio
+        count_dict['pRatio'] = pos_ratio
+        count_dict['nRatio'] = neg_ratio
+    else: 
+        count_dict['pRatio'] = 0
+        count_dict['nRatio'] = 0
+        
     return count_dict
 
     

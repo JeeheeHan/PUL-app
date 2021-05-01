@@ -39,7 +39,10 @@
         {% endif %}
         {% if current_user.is_anonymous%}
         <section>
-          <div class="anonymousUser">Let's have you log in to start chatting away...</div>
+          <form class="chat">
+          <input type="fake" class="message" value="Hi there, login to start chatting..." />
+          <input type="submit" class="btn" value="Send" disabled="disabled">
+        </form>
         </section>
         {% endif %}
       </div>
