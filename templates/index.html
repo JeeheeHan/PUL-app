@@ -23,7 +23,7 @@
         <section class="message_holder">
           {% for msg in messages %}
           <div class="mesContainer"><b style="color: #000">{{msg.user.username}}: </b>{{ msg.message }}
-            <span class="timestamp">{{msg.timestamp.strftime('%c')}}</span>
+            <span class="timestamp">{{msg.timestamp.strftime('%d/%b %H:%M')}}</span>
           </div>
           {% endfor %}
         </section>
@@ -51,7 +51,7 @@
         <!-- <img src="/static/images/000.png" style="z-index: -1;position: absolute;right: 17%;bottom: 18%;opacity: 0.5;"> -->
         <img src="/static/images/0000.png" style="position: absolute;z-index: -2;opacity: 0.5;left: 45%;bottom: 20%;">
         <img src="/static/images/000.png" style="position: absolute;z-index: -3;opacity: .5;bottom: 20%;right: 3%;">
-        <img src="/static/images/baseboard.PNG" style="position: absolute;z-index: -4;left: 46%;bottom: -12%;">
+        <img src="/static/images/baseboard.PNG" style="position: absolute;z-index: -4;left: 46%;top: 29%;bottom: 0;">
         <div class="row">
           <div class="col">
             <div class="popup" id="testPopup">

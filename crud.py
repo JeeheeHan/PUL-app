@@ -45,9 +45,9 @@ def get_user_id(data):
 
 
 def save_chat_message(data):
-    """Saving chat message into DB and return chat ID"""
+    """Saving chat message into DB and return the latest entry"""
     user_id = get_user_id(data)
-    message = data['message']
+    message = data['message'].replace("'", '"')
     timestamp = data['timestamp']
 
     db.session.add(General_chat(message=message, 
@@ -55,7 +55,7 @@ def save_chat_message(data):
                                 timestamp=timestamp))
     db.session.commit()
 
-    return General_chat.query.order_by(General_chat.chatID.desc()).first().chatID
+    return General_chat.query.order_by(General_chat.chatID.desc()).first()
     #get the latest input added 
 
 def print_pos_neg(num):

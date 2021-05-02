@@ -69,12 +69,12 @@ def handle_message(data):
     #Save the incoming messages into General_chat table
     if data['username']:
         ##TO DO : add to check if the message is valid
-        chatID = crud.save_chat_message(data)
+        latest_entry = crud.save_chat_message(data)
         #returns the latest chat id 
-        comp_or_neg = crud.save_nlp(data, chatID)
+        comp_or_neg = crud.save_nlp(data, latest_entry.chatID)
         data['polarity'] = comp_or_neg
+        data['timestamp'] = latest_entry.timestamp.strftime('%d/%b %H:%M')
         #Adding a new key/value to the data dictionary
-    
     emit('new line',data, broadcast=True)
 
 @socketio.on('health')

@@ -31,7 +31,7 @@ $(window).on('load', ()=>{
       //String the date time 
       let timestamp= new Date()
 
-      socket.emit ( 'messaging', JSON.stringify({username:username, message:userMessage, timestamp:timestamp.toISOString()}))
+      socket.emit ( 'messaging', JSON.stringify({username:username, message:userMessage, timestamp:timestamp.toUTCString()}))
       $( 'input.message' ).val( '' ).focus()
     });
   });
