@@ -47,8 +47,8 @@ def homepage():
     #count_dict = {pos: num, neg:num, total:num}
     messages = crud.get_messages()
     pic = crud.get_plant_health(crud.get_ratio(count_dict))
-
-    return render_template("index.html", messages = messages, count = count_dict, pic = pic)
+    form = WordsForm()
+    return render_template("index.html", messages = messages, count = count_dict, pic = pic, form = form)
 
 @socketio.on('connect')
 def connected():
@@ -195,10 +195,13 @@ def analyze_page():
     form = WordsForm()
     if current_user.is_authenticated:
         latest_messages = NLP.query.options(db.joinedload(NLP.chat)).filter_by(userID=current_user.id).order_by(NLP.chatID.desc()).limit(5)
+        earliest_messages = NLP.query.options(db.joinedload(NLP.chat)).filter_by(userID=current_user.id).order_by(NLP.chatID).limit(5)
         #list of messages selected from DB
-        return render_template("analyze.html", latest_messages=latest_messages, form=form)
+        return render_template("analyze.html", latest_messages=latest_messages, earliest_messages=earliest_messages, form=form)
     else:
-        return render_template("analyze.html", form=form)
+        all_latest_messages = NLP.query.options(db.joinedload(NLP.chat),db.joinedload(NLP.user)).order_by(NLP.chatID.desc()).limit(5)
+        all_earliest_messages = NLP.query.options(db.joinedload(NLP.chat),db.joinedload(NLP.user)).order_by(NLP.chatID).limit(5)
+        return render_template("analyze.html", latest_messages=all_latest_messages , earliest_messages=all_earliest_messages, form=form)
 
 
 

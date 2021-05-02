@@ -351,16 +351,7 @@ background-color: white;
   margin:0px;
 }
 
-.pt-4 {
-  padding-top: 3rem!important;
-  padding-bottom: 0rem!important;
-  font-size: 13px;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
-  line-height: 55px;
-}
+
 .py-3{
   padding-top: 0.5rem!important;
   padding-bottom: 0.5rem!important;
@@ -371,20 +362,81 @@ background-color: white;
   font-weight: 600;
   color: #4e5a41;
 }
-
-
+/* Row 2 in index background */
+/* .py-5{
+  padding-top: 3rem;
+  padding-bottom: 3rem!important;
+} */
 /* Analzyer Page */
-.userlatest{
-  background-color: #faf9f9;
-}
+/* .userlatest{
+  background:rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+} */
+
 .polarity{
   border: 2px solid #eae8e1;
   background-color: #fffafa;
   border-radius: 5px;
   padding: 10px;
-  margin: 12px 12px;
+  width: 350px;
+  color: #4e5a41;
 }
 #A.h1{
   color: #4e5a41;
   font-family: 'Krub', sans-serif, bold;
+}
+
+.img-row2{
+  position: absolute;
+  opacity: 0.8;
+  top: 98%;
+  left: 3%;
+  z-index: -5;
+}
+.img-row3{
+  position: absolute;
+  opacity: 0.8;
+  top: 144%;
+  z-index: -5;
+  right: 2%;
+}
+h5{
+  font-size: 1.6rem;
+}
+textarea {
+  width: 295px;
+  height: 230px;
+}
+
+.wordform{
+  border-style: hidden;
+  color: #4e5a41;
+
+}
+.polform{
+  height: 450px;
+  border-radius: 5px;
+  background:rgba(255, 255, 255, 0.5);
+  width: 350px;
+}
+
+.getPolar{
+  padding: 1rem;
+
+}
+
+.about{
+  font-size: 22px;
+  font-style: italic;
+  color: #ffaa59;
+  font-weight: 480;
+  text-align: center;
+}
+
+.img-analyze{
+  position: absolute;
+  /* opacity: ; */
+  top:3%;
+  z-index: -1;
+  right: 2%;
 }

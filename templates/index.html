@@ -68,6 +68,48 @@
       </div>
 
     </div>
+<!-- Testing the extending index -->
+<div class="img-row2">
+  <img class="img-fluid center" src="/static/images/004.png" alt="Plant Lady 5" />
+</div>
+<div class="row">
+  <div class="d-flex justify-content-end">
+    <div style="margin: 40px;">
+      <h4 class="polarity">
+        <b style="font-size:35px;">Polarity </b><span id="pClass">is...</span> <span id="pPolar"></span>
+      </h4>
+      <section class="polform" style="text-align: center;">
+        <form action="/getPolarity" class="getPolar" >
+          <dl>
+            {{ form.csrf_token }}
+            <b style="font-size: 30px;">{{ form.analysis.label }}</b>{{ with_errors(form.analysis) }}
+            <b style="font-size: 30px;">{{ form.text.label }}</b>{{ with_errors(form.text) }}
+            {{ form.submit(class="button is-sucess")}}
+          </dl>
+        </form>
+
+      </section>
+    
+    </div>
+    <div class="d-flex align-items-center"style="width:400px;">
+      <div class="about">
+        Feel free to run the text analyzer<br> to get your sentiment polarity today!<br>
+        Where does this come from? <br>We can currently use two different sentiment analysis 
+        techniques which are based from different styles of corpora and lexical resources. 
+        Pattern Library uses a dictionary-based approach with a few heuristics while 
+        Naive Bayes approach is based on calculating probability trained from real movie ratings.
+      </div>
+
+    </div>
+    <div class="img-row3">
+      <img class="img" src="/static/images/spickey.png" alt="Pink Plant 2" />
+    </div>
+  </div>
+</div>
+
+
+
+
   </div>
 </div>
 
