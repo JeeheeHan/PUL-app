@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{% endblock head %}
+
+{% block body %}
+<div class="d-flex">
+  <div class="text-align center">
+    SECTION 1
+
+    {% if current_user.is_authenticated %}
+          <div class="">
+            <section class="userlatest">
+              <h5>
+                <b style="color:#000;">{{ current_user.username }}</b>'s latest talks
+              </h5>
+              {% for info in latest_messages %}
+              <div class="mesContainer"><b style="color: #000">{{current_user.username}}:
+                </b>{{info.chat.message}}
+                <span class="timestamp">{{info.chat.timestamp.strftime('%b-%d-%y %H:%M')}}</span>
+              </div>
+              {% endfor %}
+            </section>
+          </div>
+          <div class="">
+            <section class="userlatest">
+            <h5>
+              Polarity
+            </h5>
+            {% for info in latest_messages %}
+            <p class="mesContainer"><b style="color: #000; text-align: center;">{{info.polarity}}</b></p>
+            {% endfor %}
+          </section>
+          </div>
+          {% endif %}
+        
+  
+  
+  
+  </div>
+  <div class="p-2">SECTION 2
+    <div class="">
+      <h4 class="polarity">
+        Polarity:<span id="pClass"></span><span id="pPolar"></span>
+      </h4>
+      <form action="/getPolarity" class="getPolar" >
+        <dl>
+          {{ form.csrf_token }}
+          {{ form.analysis.label }}:{{ with_errors(form.analysis) }}
+          {{ form.text.label }}:{{ with_errors(form.text) }}
+          {{ form.submit(class="button is-sucess")}}
+        </dl>
+      </form>
+
+
+  </div>
+  <!-- <div class="p-2">SECTION 3
+    <div class="col">
+      <h1 class="">
+        Some good to knows
+      </h1>
+      <p>
+      </p>
+    </div>
+
+
+  </div> -->
+
+
+</div>
+
+
+
+
+
+<!-- <div class="aboutpage">
+
+
+
+    <div class="row">
+      <div class="col">
+        <div class="row">
+          {% if current_user.is_authenticated %}
+          <div class="col-md-6 align-self-center">
+            <section class="userlatest">
+              <h5>
+                <b style="color:#000;">{{ current_user.username }}</b>'s latest talks
+              </h5>
+              {% for info in latest_messages %}
+              <div class="mesContainer"><b style="color: #000">{{current_user.username}}:
+                </b>{{info.chat.message}}
+                <span class="timestamp">{{info.chat.timestamp.strftime('%b-%d-%y %H:%M')}}</span>
+              </div>
+              {% endfor %}
+            </section>
+        
+            
+  
+          </div>
+          <div class="col-3">
+            <section class="userlatest">
+            <h5>
+              Polarity
+            </h5>
+            {% for info in latest_messages %}
+            <p class="mesContainer"><b style="color: #000; text-align: center;">{{info.polarity}}</b></p>
+            {% endfor %}
+          </section>
+          </div>
+          {% endif %}
+          
+          {% if current_user.is_anonymous%}
+          <div class="col">
+            <img class="img-fluid center" src="/static/images/00.png" alt="Plant 00" />
+            <h1 id="h1right">Welcome Stranger</h1>
+            <h2 class="pmid">Become a member and see how messages made an impact</h2>
+          </div>
+          {% endif %}
+          </div>
+  
+        <img class="img-fluid center" src="/static/images/004.png" alt="Plant Lady 5" />
+
+      </div>
+
+
+      <div class="col">
+        <h4 class="polarity">
+          Polarity:<span id="pClass"></span><span id="pPolar"></span>
+        </h4>
+        <form action="/getPolarity" class="getPolar" >
+          <dl>
+            {{ form.csrf_token }}
+            {{ form.analysis.label }}:{{ with_errors(form.analysis) }}
+            {{ form.text.label }}:{{ with_errors(form.text) }}
+            {{ form.submit(class="button is-sucess")}}
+          </dl>
+        </form>
+
+
+
+      </div>
+      <div class="col">
+        <h1 class="">
+          Some good to knows
+        </h1>
+      </div>
+
+
+    </div>
+  </div>
+</div> -->
+
+
+{% endblock %}

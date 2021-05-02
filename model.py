@@ -45,30 +45,20 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f'<Username:{self.username}>'
 
-#remember to add the repr
-class Adjectives(db.Model):
-    """ALL the list of words combined"""
-
-    __tablename__ = 'words'
-
-    adj_id = db.Column(db.Integer,
-                    autoincrement=True,
-                    primary_key=True)
-    word_type = db.Column(db.Integer)
-    #keeping the type to be an integer for now so maybe i can call it earlier 
-    word = db.Column(db.String)
-
+    
 class General_chat(db.Model):
     """General chat table"""
     __tablename__ = 'chat'
 
     chatID = db.Column(db.Integer,primary_key=True)
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    #review this later in case of message time stamp thing 
     userID = db.Column(db.Integer, db.ForeignKey('users.id'))
     message = db.Column(db.Text, nullable= False)
 
     user = db.relationship('User', backref='General_chat')
+
+    def __repr__(self):
+        return f'<General_chat chatID:{self.chatID} timestamp:{self.timestamp} userID:{self.userID} message:{self.message} >'
 
 class NLP(db.Model):
     """NLP table"""
@@ -85,6 +75,8 @@ class NLP(db.Model):
     user = db.relationship('User', backref='NLP')
     chat = db.relationship('General_chat', backref='NLP')
 
+    def __repr__(self):
+        return f'<NLP id:{self.id} userID={self.userID} chatID={self.chatID} word_count:{self.word_count} polarity:{self.polarity} filtered_words:{self.filtered_words}>'
 
 if __name__ == '__main__':
     from server import app

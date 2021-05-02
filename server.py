@@ -47,9 +47,8 @@ def homepage():
     #count_dict = {pos: num, neg:num, total:num}
     messages = crud.get_messages()
     pic = crud.get_plant_health(crud.get_ratio(count_dict))
-    form = WordsForm()
 
-    return render_template("index.html", messages = messages, count = count_dict, pic = pic, form = form)
+    return render_template("index.html", messages = messages, count = count_dict, pic = pic)
 
 @socketio.on('connect')
 def connected():
@@ -190,11 +189,26 @@ def logout():
     return redirect("/")
 
 
-@app.route('/words')
-def all_words():
-    """Just print all the words on there"""
-    words = crud.get_words()
-    return render_template("plant.html", words=words)
+@app.route('/analyze')
+def analyze_page():
+    """This page will render different information for current users vs new users"""
+    form = WordsForm()
+    if current_user.is_authenticated:
+        latest_messages = NLP.query.options(db.joinedload(NLP.chat)).filter_by(userID=current_user.id).order_by(NLP.chatID.desc()).limit(5)
+        #list of messages selected from DB
+        return render_template("analyze.html", latest_messages=latest_messages, form=form)
+    else:
+        return render_template("analyze.html", form=form)
+
+
+
+
+
+# @app.route('/words')
+# def all_words():
+#     """Just print all the words on there"""
+#     words = crud.get_words()
+#     return render_template("plant.html", words=words)
 
 #let's run this thing! 
 

@@ -36,6 +36,6 @@ class UserprofileForm(FlaskForm):
 
 class WordsForm(FlaskForm):
     """Form to get polarity of requested text"""
-    analysis = SelectField(u'Opinion Mining', choices=[('pat', 'Pattern Library'), ('naive', 'NaiveBayers from Movie reviews')])
-    text = TextAreaField(u'Text', validators=[Length(max=200)])
-    submit = SubmitField("run")
+    analysis = SelectField(u'Opinion Mining', choices=[('pat', 'Dictionary based (Pattern Library)'), ('naive', 'Movie Ratings based(NaiveBayers)')], render_kw={"class":"wordform"})
+    text = TextAreaField(u'Text', validators=[Length(max=200)],render_kw={"placeholder":"Polarity ranges from most positve being 1 while at worst -1 for negativity", "class":"wordform"})
+    submit = SubmitField("Run")

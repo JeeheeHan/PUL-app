@@ -1,22 +1,5 @@
 let counts = { 'positive': Number($('#pos').text()), 'negative':Number($('#negative').text()), 'total':Number($('#total').text()) };
 
-  $('form.getPolar').on('submit',(e)=>{
-    e.preventDefault();
-    console.log($('form.getPolar').serialize())
-    const polarity = $.ajax({
-      url:'/getPolarity',
-      type:"POST",
-      data: $('form.getPolar').serialize()
-    });
-    
-    polarity.done( (res)=>{
-      $('#pClass').html(res.class);
-      $('#pPolar').html(res.polarity);
-      console.log(res.class)
-      console.log("got a respsonse")
-    });
- });
-
 
 $(window).on('load', ()=>{
   const socket = io.connect();
@@ -80,6 +63,24 @@ $(window).on('load', ()=>{
       $('#myPopup').html(comps).toggleClass("show");
     });
   });
+  
+  $('form.getPolar').on('submit',(e)=>{
+    e.preventDefault();
+    console.log($('form.getPolar').serialize())
+    const polarity = $.ajax({
+      url:'/getPolarity',
+      type:"POST",
+      data: $('form.getPolar').serialize()
+    });
+    
+    polarity.done( (res)=>{
+      $('#pClass').html(res.class);
+      $('#pPolar').html(res.polarity);
+      console.log(res.class)
+      console.log("got a respsonse")
+    });
+ });
+
 
   });
 
