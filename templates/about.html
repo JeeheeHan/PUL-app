@@ -1,19 +1,9 @@
-<!-- Public chat -->
 {% extends 'base.html' %}
 
 {% block head %}
-<title>
-    Testing words
-</title>
 {% endblock head %}
 
 {% block body %}
-<ul>
-    {% for word in words %}
-    <li>
-      <a href="/words/{{ word.word }}">{{ word.word }}</a>
-    </li>
-    {% endfor %}
-    </ul>
+
 
 {% endblock %}

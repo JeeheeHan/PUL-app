@@ -17,6 +17,7 @@
             <img class="img-fluid center" src="/static/images/002.png" alt="Plant Lady 4"/>
           </div>
             <h1 id="h1right">{{ current_user.username }}'s Page</h1>
+            <h2 class="pmid">Last seen on {{current_user.last_login.strftime('%b-%d-%y')}}</h2>
         </div>
       </aside>
       <main class="col h-100 overflow-y">

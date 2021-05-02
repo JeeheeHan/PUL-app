@@ -111,9 +111,7 @@ def login():
         if user is None:
             flash('Invalid username or password', 'flash')
             return redirect('/login')        
- 
-
-        crud.login_track(user.username)
+        
         login_user(user)
 
         return redirect('/')
@@ -187,6 +185,7 @@ def sentiment_form():
 @app.route('/logout')
 def logout():
     """Log out using flask login lib"""
+    crud.login_track(current_user.username)
     logout_user()
     return redirect("/")
 
