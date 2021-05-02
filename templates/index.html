@@ -23,7 +23,7 @@
         <section class="message_holder">
           {% for msg in messages %}
           <div class="mesContainer"><b style="color: #000">{{msg.user.username}}: </b>{{ msg.message }}
-            <span class="timestamp">{{msg.timestamp.strftime('%d/%b %H:%M')}}</span>
+            <span class="timestamp">{{msg.timestamp.strftime('%b-%d-%y %H:%M')}}</span>
           </div>
           {% endfor %}
         </section>

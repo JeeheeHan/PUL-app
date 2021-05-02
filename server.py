@@ -73,7 +73,7 @@ def handle_message(data):
         #returns the latest chat id 
         comp_or_neg = crud.save_nlp(data, latest_entry.chatID)
         data['polarity'] = comp_or_neg
-        data['timestamp'] = latest_entry.timestamp.strftime('%d/%b %H:%M')
+        data['timestamp'] = latest_entry.timestamp.strftime('%b-%d-%y %H:%M')
         #Adding a new key/value to the data dictionary
     emit('new line',data, broadcast=True)
 
