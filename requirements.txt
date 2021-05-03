@@ -1,3 +1,4 @@
+attrs==20.3.0
 bidict==0.21.2
 cachelib==0.1.1
 click==7.1.2
@@ -13,13 +14,19 @@ Flask-SQLAlchemy==2.5.1
 Flask-WTF==0.14.3
 greenlet==1.0.0
 importlib-metadata==3.10.0
+iniconfig==1.1.1
 is-disposable-email==1.0.0
 itsdangerous==1.1.0
 Jinja2==2.11.3
 joblib==1.0.1
 MarkupSafe==1.1.1
 nltk==3.6.1
+packaging==20.9
+pluggy==0.13.1
 psycopg2==2.8.6
+py==1.10.0
+pyparsing==2.4.7
+pytest==6.2.3
 python-engineio==4.0.1
 python-socketio==5.1.0
 pytz==2021.1
@@ -27,6 +34,7 @@ regex==2021.4.4
 six==1.15.0
 SQLAlchemy==1.4.5
 textblob==0.15.3
+toml==0.10.2
 tqdm==4.60.0
 typing-extensions==3.7.4.3
 Werkzeug==1.0.1

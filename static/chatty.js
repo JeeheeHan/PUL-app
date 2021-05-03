@@ -1,6 +1,7 @@
+// Grab the server given pos and neg value and create the dictionary counts
 let counts = { 'positive': Number($('#pos').text()), 'negative':Number($('#negative').text()), 'total':Number($('#total').text()) };
 
-
+// Wait for all the images to load too
 $(window).on('load', ()=>{
   const socket = io.connect();
 
@@ -55,7 +56,8 @@ $(window).on('load', ()=>{
     dataType: 'JSON'
   });
   
-  $('#testPopup').on('click', (e) => {
+  //AJAX CALL FUNCTION TO GET COMPLIMENT
+  $('#Popup').on('click', (e) => {
     e.preventDefault();
     
     compliment.done(function(data){
@@ -64,6 +66,7 @@ $(window).on('load', ()=>{
     });
   });
   
+  //AJAX CALL INTO SERVER TO GET POLARITY 
   $('form.getPolar').on('submit',(e)=>{
     e.preventDefault();
     console.log($('form.getPolar').serialize())

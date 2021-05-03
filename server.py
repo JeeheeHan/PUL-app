@@ -33,7 +33,6 @@ login_manager.login_message = ""
 Session(app)
 #create the server with the var socketio
 socketio = SocketIO(app, manage_session=False)
-#  cookie=None)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -42,50 +41,51 @@ def load_user(user_id):
 
 @app.route('/')
 def homepage():
-    """ TO DO """
+    """When the user connects, the database will send over latest inputs to load the html along with the pic appropriate to the plant's health
+    The sentiment analyzer form is also returned in the homepage"""
     count_dict = crud.count_pos_neg()
-    #count_dict = {pos: num, neg:num, total:num}
     messages = crud.get_messages()
     pic = crud.get_plant_health(crud.get_ratio(count_dict))
     form = WordsForm()
     return render_template("index.html", messages = messages, count = count_dict, pic = pic, form = form)
 
+##### REAL TIME asynchronous routes ######
+
 @socketio.on('connect')
 def connected():
+    """Print conncted if any one connects to the website"""
     print('Connected!')
 
 @socketio.on('disconnect')
 def diconnected():
+    """Print disconnected if any one connects to the website"""
     print('Disconnected')
 
 @socketio.on('messaging')
 def handle_message(data):
-    """ ADD HERE"""
-    #Data wil be {username = username, message = userMessage,timestamp = timestamp}
-    """Handle the messages coming in, data will be in in json string then used json to make into dictionary"""
+    """Socket's first real listener event when a user sends a message in chat. 
+    So save the user message if the user is active, and return the polarity of 
+    the message input along with the time stamp as a string dictionary in data under event called "new line" """
     print('new line', data)
     data = json.loads(data)
     #Save the incoming messages into General_chat table
     if data['username']:
-        ##TO DO : add to check if the message is valid
         latest_entry = crud.save_chat_message(data)
-        #returns the latest chat id 
         comp_or_neg = crud.save_nlp(data, latest_entry.chatID)
         data['polarity'] = comp_or_neg
         data['timestamp'] = latest_entry.timestamp.strftime('%b-%d-%y %H:%M')
-        #Adding a new key/value to the data dictionary
     emit('new line',data, broadcast=True)
 
 @socketio.on('health')
 def handle_plant_health(data):
-    # data = {positive : counts.positive.toString(), negative : counts.negative.toString(), total: counts.total.toString()}
+    """ Front end will send back the live chat's pos/neg counts. Server to send back the appropriate pic back to all connected users"""
     count_dict = crud.get_ratio(data)
 
     pic = crud.get_plant_health(count_dict)
 
     emit('my_image', {'plant_pic': "plant_pic", 'pic': pic})
 
-
+#####  USER LOGIN, LOGOUT, EDIT PASSWORD, CHECK MESSAGE SENTIMENT routes ######
 def check_if_logged_in():
     """Check if the user was already logged in"""
     if current_user.is_authenticated:
@@ -97,9 +97,7 @@ def login():
     check_if_logged_in()
 
     form = LoginForm(request.form)
-
-    #WTF built in function will check for my convenience
-    #https://flask-wtf.readthedocs.io/en/stable/quickstart.html     
+    
     if form.validate_on_submit():
         username = form.username.data
 
@@ -117,7 +115,7 @@ def login():
 
 
     return render_template("login.html", form=form)
-    # pass in the most recent sentiment and have plant status to change using jinja
+
 
 @app.route('/register', methods=['POST', 'GET'])
 def register_user():
@@ -138,12 +136,12 @@ def register_user():
 @app.route('/edit_profile', methods=["GET", "POST"])
 @login_required
 def change_password():
-    """Change Password:TO DO ADD DETAILS """
+    """Change Password by checking if hashed passwords matches and return errors or sucess message """
     form = UserprofileForm()
     if form.validate_on_submit():
         username = current_user.username
         user = crud.login_check(username, form.password.data)
-        #checking if the current password is right
+        #Checking if the current password is right
         if user:
             user.set_password(form.new_password.data)
             db.session.commit()
@@ -155,31 +153,6 @@ def change_password():
         form.username.data = current_user.username
     
     return render_template("profile.html", form = form)
-
-@app.route('/getPolarity', methods=["POST"])
-def sentiment_form():
-    """From the AJAX request from chatt.js, return var answer as a dictionary with the results
-    """
-    #add a if statment if the text is not empty
-    #needed the post listed in method for AJAX request can come through
-    form = WordsForm()
-    quest = form.data.get('analysis')
-    text = form.data.get('text')
-    if form.validate_on_submit():
-        print('Someone is trying the analyzer!')
-        result = crud.print_polarity_from_input(quest,text)
-        #if the chosen analysis is "PAT", result would comback as a float else would come out Sentiment class from Naive
-        if not isinstance(result, float):
-            # ex)Sentiment(classification='pos', p_pos=0.5702702702702702, p_neg=0.4297297297297299)
-            answer = crud.break_down_naive(result)
-            return jsonify(answer)
-        else:
-            answer = crud.print_pos_neg(result)
-            return jsonify({'class':answer, 'polarity':result})
-
-    return jsonify(data=form.errors)
-    #Forms input requriments would be sent out instead
-
 
 @app.route('/logout')
 def logout():
@@ -205,16 +178,33 @@ def analyze_page():
 
 
 
+##### AJAX CALL HANDLER from Sentiment Analysis form ######
+
+@app.route('/getPolarity', methods=["POST"])
+def sentiment_form():
+    """From the AJAX request from chatty.js, return var answer as a dictionary with the results
+    """
+    form = WordsForm()
+    quest = form.data.get('analysis')
+    text = form.data.get('text')
+    if form.validate_on_submit():
+        print('Someone is trying the analyzer!')
+        result = crud.print_polarity_from_input(quest,text)
+        #if the chosen analysis is "PAT", result would comback as a float else would come out Sentiment class from Naive
+        if not isinstance(result, float):
+            # ex)Sentiment(classification='pos', p_pos=0.5702702702702702, p_neg=0.4297297297297299)
+            answer = crud.break_down_naive(result)
+            return jsonify(answer)
+        else:
+            answer = crud.print_pos_neg(result)
+            return jsonify({'class':answer, 'polarity':result})
+
+    return jsonify(data=form.errors)
 
 
-# @app.route('/words')
-# def all_words():
-#     """Just print all the words on there"""
-#     words = crud.get_words()
-#     return render_template("plant.html", words=words)
 
-#let's run this thing! 
 
 if __name__ == '__main__':
     connect_to_db(app)
+    
     socketio.run(app, host='0.0.0.0', debug=True)
