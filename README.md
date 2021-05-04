@@ -11,36 +11,41 @@
 <a name="Overview"></a>
 PUL allows users to interactively insult or compliment the virtual plant via live chat. In this virtual stimulation, the comments are categorized by positive or negative sentiment using NLP. Every message is analyzed then tokenized which allows users to see their contribution’s sentiment polarity and directly impact the plant’s health. As for the virtual plant, just like a real plant, it has the capability to withstand positivity or negativity depending on the conversation’s flow. The more messages the plant receives, the plant’s health tolerates more one way or the other depending on the total sentiment polarity.
 
-Any users can see the live chat but not able to send a message unless logging in
+***Any users can see the live chat but not able to send a message unless logging in***
 ![](/demo/PUL-app1.gif)
 
-Users can log in/log out/edit password
+***Users can log in/log out/edit password***
+
 ![](/demo/PUL-app2.gif)
 
-This form allows users to play around sentiment polarity scores for 2 different libraries
-![](/demo/Sentiment form.png)
+***This form allows users to play around sentiment polarity scores for 2 different libraries***
 
-Logged in users can see their own messages and the polarity as well
-![](/demo/analyze.gif)
+![](/demo/form1.png)
 
-And there we have it! 
+***Logged in users can see their own messages and the polarity as well***
+
+![](/demo/analyze.png)
+
+***And there we have it!***
+
 ![](/demo/PUL-app4.gif)
 
 
-Here is the plant at its happiest
+***Here is the plant at its happiest***
+
 ![](/demo/PUL-app5.gif)
 
 
 ### Technologies
 <a name="Technologies"></a>
--Python, SQLAlchemy, PostgreSQL, Flask, FlaskSocketIO, eventlet, Flask-Login, WTForms, TextBlob
--Javascript, jQuery(AJAX), Jinja2, Bootstrap, Google Fonts, HTML5, CSS3
--APIs: Socket.IO, Complimentr 
+- Python, SQLAlchemy, PostgreSQL, Flask, FlaskSocketIO, eventlet, Flask-Login, WTForms, TextBlob
+- Javascript, jQuery(AJAX), Jinja2, Bootstrap, Google Fonts, HTML5, CSS3
+- APIs: Socket.IO, Complimentr 
 
 
 ### Installation
 <a name="installation"></a>
-Tip: Create your own secrets.sh for the secret key :)
+Tip: Create your own secrets.sh for the secret key
 ***
 A little intro about the installation. 
 ```
