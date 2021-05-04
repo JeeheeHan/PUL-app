@@ -1,60 +1,62 @@
-## Project Proposal
+## Plants Utilize Language
+
+## Table of Contents
+1. [Overview](#overview)
+2. [Technologies](#technologies)
+3. [Installation](#installation)
+4. [Roadmap](#roadmap)
+5. [FAQs](#faqs)
 
 ### Overview
-An app where users can add positive or negative words to a virtual plant.
-Based on this experiment:https://www.youtube.com/watch?v=Yx6UgfQreYY&feature=emb_title&ab_channel=IKEAUAE
+<a name="Overview"></a>
+PUL allows users to interactively insult or compliment the virtual plant via live chat. In this virtual stimulation, the comments are categorized by positive or negative sentiment using NLP. Every message is analyzed then tokenized which allows users to see their contribution’s sentiment polarity and directly impact the plant’s health. As for the virtual plant, just like a real plant, it has the capability to withstand positivity or negativity depending on the conversation’s flow. The more messages the plant receives, the plant’s health tolerates more one way or the other depending on the total sentiment polarity.
 
-https://www.newyorker.com/magazine/2013/12/23/the-intelligent-plant
+Any users can see the live chat but not able to send a message unless logging in
+![](/demo/PUL-app1.gif)
+
+Users can log in/log out/edit password
+![](/demo/PUL-app2.gif)
+
+This form allows users to play around sentiment polarity scores for 2 different libraries
+![](/demo/Sentiment form.png)
+
+Logged in users can see their own messages and the polarity as well
+![](/demo/analyze.gif)
+
+And there we have it! 
+![](/demo/PUL-app4.gif)
 
 
-Pitch: 
-Do you think plants have the same senses as a human being? Even dating back to 1966 there are experiments that a CIA polygraph expert hooked on stress level machine to an office plant (Dracaena). To his suprise, with just imagining burning the plant, the plant felt stress. In this internet webbed world we are in, I want to provide the same opportunity to virtually experiment with a plant using words. PUL is a web application that allows users to decide on complimenting or insulting your very own plant. With this virtual stimulation, I want to inspire to not only allow the user to get creative with words, but to understand the impact of positivity and negativity overall. Back in 2018, IKEA collected statements from children and played compliments to one plant and insults to another. Kids were able to visualize the impacts of words through the plants. The results were as shocking or expected to some. The plant receiving compliments thrived while the other did not. So I welcome you to utlizie the power of positivity or negativity and make an impact to your own virtual plant
-
-galvanometer
+Here is the plant at its happiest
+![](/demo/PUL-app5.gif)
 
 
-### Technologies required (besides typical Hackbright tech stack)
+### Technologies
+<a name="Technologies"></a>
+-Python, SQLAlchemy, PostgreSQL, Flask, FlaskSocketIO, eventlet, Flask-Login, WTForms, TextBlob
+-Javascript, jQuery(AJAX), Jinja2, Bootstrap, Google Fonts, HTML5, CSS3
+-APIs: Socket.IO, Complimentr 
 
-- Compliments or insults API 
-- Twilio API for messaging 
-### Data
 
-- User email, password
-- Plant, type
-- Stages of plant life 
-- Compliments
-- Insults
-- daily submission of words specific for user
-- Words so the plant can talk back
-- Tracker of compliments or insults 
-
+### Installation
+<a name="installation"></a>
+Tip: Create your own secrets.sh for the secret key :)
+***
+A little intro about the installation. 
+```
+$ git clone https://github.com/JeeheeHan/PUL-app.git
+$ pip3 install -r requirements.txt
+$ source secrets.sh
+$ python3 server.py
+```
 
 ### Roadmap
-- Markov chain to randomly generate the words, 
-- 
-#### MVP
+<a name="Roadmap"></a>
+Feature releases coming up:
+- Regex implementation for sanitizing messages
+- Visualization of top words
+- More plants!
 
-- Users can login
-- Main chat room would show 
-- Users can "feed" a virtual plant of choosing compliment or insult
-- Alert user the instructions and purpose behind this app after loggin in
-
-
-#### 2.0
-
-- User can have a multiple plants
-- Creating a sentiment data
-- Have a generation of words to use and show on homepage as a occlusion(TBD)
-- Send notification to emails regarding plant status
-- Frequency of the compliments or insults
-- dashboard of top used compliments or insults???
-
-#### 3.0
-
-- Go mobile and have notifcations sent dailt to keep care of the plant
-- Find bar to search for compliments or insults 
-- Get tons of variety of plants to choose from
-- Even further reaching is having the plant be able to listen to music 
-
-### Notes
-
+### FAQs
+<a name="faqs"></a>
+Jenny was a revenue manager specializing in hospitality management which included data modeling, forecasting, and channel optimizing. As the POS expert, she got involved in a new website launch to test the direct booking integration. Through this involvement, she got inspired to transition into SWE to create cost effective infrastructure that can improve operations and system reliability with numerous distributions. From the holistic perspective of CRM and profit driving strategies, Jenny is eager to apply her coding skills to enhance such tech. Aside from programming, she is also passionate about keeping up with the latest technologies for best performance with new game launches. Find her on [LinkedIn](https://www.linkedin.com/in/jihee-jenny/) and on [Github](https://github.com/JeeheeHan).
