@@ -6,11 +6,11 @@ from datetime import datetime
 from flask_login import UserMixin
 
 from werkzeug.security import generate_password_hash,check_password_hash
-
+import os
 
 db = SQLAlchemy()
 
-def connect_to_db(flask_app, db_uri = 'postgresql:///pul_db', echo=True):
+def connect_to_db(flask_app, db_uri = os.environ.get('DATABASE_URL'), echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = False
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
