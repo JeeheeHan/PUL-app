@@ -207,4 +207,4 @@ def sentiment_form():
 if __name__ == '__main__':
     connect_to_db(app)
     
-    socketio.run(app, host='0.0.0.0', debug=True)
+    socketio.run(app, host='0.0.0.0')
