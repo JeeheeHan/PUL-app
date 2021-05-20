@@ -10,7 +10,10 @@ import os
 
 db = SQLAlchemy()
 
-def connect_to_db(flask_app, db_uri = os.environ.get('DATABASE_URL').replace("://", "ql://", 1), echo=True):
+def connect_to_db(flask_app, db_uri = os.environ.get('DATABASE_URL'), echo=True):
+    if db_uri.startswith("postgres://"):
+        db_uri = db_uri.replace("postgres://", "postgresql://", 1)
+
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = False
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

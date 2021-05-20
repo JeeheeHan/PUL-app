@@ -202,6 +202,7 @@ def sentiment_form():
     return jsonify(data=form.errors)
 
 connect_to_db(app)
+db.create_all()
 
 if __name__ == '__main__':
     db.create_all()
