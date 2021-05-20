@@ -10,6 +10,9 @@
 ### Overview
 <a name="Overview"></a>
 PUL allows users to interactively insult or compliment the virtual plant via live chat. In this virtual stimulation, the comments are categorized by positive or negative sentiment using NLP. Every message is analyzed then tokenized which allows users to see their contribution’s sentiment polarity and directly impact the plant’s health. As for the virtual plant, just like a real plant, it has the capability to withstand positivity or negativity depending on the conversation’s flow. The more messages the plant receives, the plant’s health tolerates more one way or the other depending on the total sentiment polarity.
+Check out the live app here (TBD on getting a custom domain name)
+https://plants-utilize-language.herokuapp.com/
+
 
 ***Any users can see the live chat but not able to send a message unless logging in***
 ![](/demo/PUL-app1.gif)
