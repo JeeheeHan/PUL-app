@@ -79,10 +79,11 @@ class NLP(db.Model):
         return f'<NLP id:{self.id} userID={self.userID} chatID={self.chatID} word_count:{self.word_count} polarity:{self.polarity} filtered_words:{self.filtered_words}>'
 
 if __name__ == '__main__':
-    from server import app
+    # from server import app
 
-    connect_to_db(app)
-    db.create_all()
+    # connect_to_db(app)
+    # db.create_all()
+    pass
 
 
 

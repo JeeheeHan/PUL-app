@@ -249,6 +249,8 @@ def get_plant_health(count_dict):
         return f"/static/images/sadplant{num}.PNG"
 
 if __name__ == '__main__':
-    from server import app
-    connect_to_db(app)
+    # from server import app
+    # connect_to_db(app)
+
+    pass
 

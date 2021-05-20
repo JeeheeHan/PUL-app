@@ -57,6 +57,10 @@ body {
   width: 100vw;
 }
 
+#footer{
+  margin-top:auto;
+}
+
 /* Login Page CSS */
 
 #h1right{
